@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Application/Application.csproj" />
+  <Project Path="Data/Data.csproj" />
+  <Project Path="Models/Domain.csproj" />
+  <Project Path="SocietyManagementWebApi/SocietyManagementWebApi.csproj" />
+</Solution>

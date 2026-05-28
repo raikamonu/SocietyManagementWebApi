@@ -1,0 +1,6 @@
+@SocietyManagementWebApi_HostAddress = http://localhost:5224
+
+GET {{SocietyManagementWebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
