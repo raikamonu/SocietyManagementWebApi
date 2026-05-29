@@ -1,4 +1,5 @@
 ﻿using Application.Repositories;
+//using Application.Repositories.MasterSetting.DropdownRepo;
 using Data;
 
 namespace Application.Helper
@@ -9,13 +10,14 @@ namespace Application.Helper
 
         public IMasterTypeRepository MasterType { get; private set; }
         public IMasterTypeDetailRepository MasterTypeDetail { get; private set; }
-
+        public IDropdownRepository Dropdown { get; private set; }
         public UnitOfWork(MissionEducationDbContext db)
         {
             _db = db;
 
             MasterType = new MasterTypeRepository(db);
             MasterTypeDetail = new MasterTypeDetailRepository(db);
+            Dropdown = new DropdownRepository(db);
         }
     }
 }

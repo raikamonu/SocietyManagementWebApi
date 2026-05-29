@@ -1,4 +1,5 @@
 ﻿using Application.Repositories;
+//using Application.Repositories.MasterSetting.DropdownRepo;
 
 namespace Application.Helper
 {
@@ -8,6 +9,6 @@ namespace Application.Helper
 
         IMasterTypeDetailRepository MasterTypeDetail { get; }
 
-
+        IDropdownRepository Dropdown { get; }
     }
 }
