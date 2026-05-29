@@ -1,7 +1,4 @@
 ﻿using Application.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Application.Repositories
 {
@@ -11,6 +8,6 @@ namespace Application.Repositories
         public Task<object> UpdateMasterType(MasterTypeDTO input);
         public Task<object> GetMasterTypeById(int id);
         Task<List<MasterTypeDTO>> GetAllMasterType();
-         public Task<object> DeleteMasterType(int id);
+        public Task<object> DeleteMasterType(int id);
     }
 }

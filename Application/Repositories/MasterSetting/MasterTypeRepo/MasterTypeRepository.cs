@@ -2,11 +2,6 @@
 using Data;
 using Microsoft.EntityFrameworkCore;
 using Model;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Application.Repositories
 {
@@ -45,14 +40,14 @@ namespace Application.Repositories
         public async Task<List<MasterTypeDTO>> GetAllMasterType()
         {
             var masterTypes = await (from mt in _db.MasterTypes
-                               where mt.IsDelete == 0
-                               select new MasterTypeDTO()
-                               {
-                                   Id = mt.Id,
-                                   Name = mt.Name,
-                                   ParentId = mt.ParentId,
-                                   IsActive = mt.IsActive
-                               }).ToListAsync();
+                                     where mt.IsDelete == 0
+                                     select new MasterTypeDTO()
+                                     {
+                                         Id = mt.Id,
+                                         Name = mt.Name,
+                                         ParentId = mt.ParentId,
+                                         IsActive = mt.IsActive
+                                     }).ToListAsync();
             return masterTypes;
         }
 
@@ -130,7 +125,7 @@ namespace Application.Repositories
             //soft delete 
             data.IsDelete = 1;
             data.IsActive = 0;
-            _db.MasterTypes.Update(data); 
+            _db.MasterTypes.Update(data);
             await _db.SaveChangesAsync();
 
             return new
@@ -153,6 +148,6 @@ namespace Application.Repositories
 
     }
 
-        }
-    
+}
+
 

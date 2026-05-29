@@ -1,6 +1,5 @@
-﻿using Application.DTOs.MasterType;
+﻿using Application.DTOs;
 using Application.Helper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SocietyManagementWebApi.Controllers.MasterType
@@ -18,7 +17,7 @@ namespace SocietyManagementWebApi.Controllers.MasterType
 
 
 
-        [HttpPost("CreateMasterTypeDetail")]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateMasterTypeDetail(MasterTypeDetailDTO input)
         {
             var result = await _repo.MasterTypeDetail.CreateMasterTypeDetail(input);
@@ -27,7 +26,7 @@ namespace SocietyManagementWebApi.Controllers.MasterType
 
 
 
-        [HttpGet("GetAll")]
+        [HttpGet("get-all")]
 
         public async Task<IActionResult> GetAll()
         {
@@ -37,7 +36,7 @@ namespace SocietyManagementWebApi.Controllers.MasterType
         }
 
 
-        [HttpGet("GetById/{id}")]
+        [HttpGet("get-by-id/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var result = await _repo.MasterTypeDetail.GetMasterTypeDetailById(id);
@@ -45,7 +44,7 @@ namespace SocietyManagementWebApi.Controllers.MasterType
         }
 
 
-        [HttpPut("UpdateMasterTypeDetail")]
+        [HttpPut("update")]
 
         public async Task<IActionResult> UpdateMasterTypeDetail(MasterTypeDetailDTO input)
         {
@@ -55,7 +54,7 @@ namespace SocietyManagementWebApi.Controllers.MasterType
         }
 
 
-        [HttpDelete("DeleteMasterTypeDetail/{id}")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteMasterTypeDetail(int id)
         {
             var result = await _repo.MasterTypeDetail.DeleteMasterTypeDetail(id);

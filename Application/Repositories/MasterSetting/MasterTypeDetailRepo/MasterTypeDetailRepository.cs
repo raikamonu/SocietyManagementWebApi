@@ -1,10 +1,7 @@
-﻿using Application.DTOs.MasterType;
+﻿using Application.DTOs;
 using Data;
 using Microsoft.EntityFrameworkCore;
 using Model;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 
 
@@ -86,7 +83,7 @@ namespace Application.Repositories
 
 
 
-       public async Task<object> UpdateMasterTypeDetail(MasterTypeDetailDTO input)
+        public async Task<object> UpdateMasterTypeDetail(MasterTypeDetailDTO input)
         {
             var existingMasterTypeDetail = await _db.MasterTypeDetails
                 .FirstOrDefaultAsync(x => x.Id == input.Id);
@@ -111,7 +108,7 @@ namespace Application.Repositories
                 Message = "MasterTypeDetail Updated Successfully"
             };
         }
-        
+
 
         public async Task<object> DeleteMasterTypeDetail(int id)
         {
@@ -135,7 +132,7 @@ namespace Application.Repositories
             };
         }
 
-       
+
 
 
 

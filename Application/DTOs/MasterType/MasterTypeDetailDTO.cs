@@ -1,6 +1,4 @@
-﻿using Microsoft.Identity.Client;
-
-namespace Application.DTOs.MasterType
+﻿namespace Application.DTOs
 {
     public class MasterTypeDetailDTO
     {

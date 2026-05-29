@@ -1,8 +1,4 @@
 ﻿using Application.DTOs;
-using Application.DTOs.MasterType;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Application.Repositories
 {

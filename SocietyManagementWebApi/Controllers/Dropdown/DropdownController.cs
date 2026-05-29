@@ -1,5 +1,4 @@
 ﻿using Application.Helper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SocietyManagementWebApi.Controllers.Dropdown
@@ -14,14 +13,14 @@ namespace SocietyManagementWebApi.Controllers.Dropdown
             _repo = repo;
         }
 
-        [HttpGet("GetMasterTypeDDL")]
+        [HttpGet("master-type")]
         public async Task<IActionResult> GetMasterTypeDDL()
         {
             var result = await _repo.Dropdown.GetMasterTypeDDL();
             return Ok(result);
         }
 
-        [HttpGet("GetParentDDL")]
+        [HttpGet("master-type-parent")]
         public async Task<IActionResult> GetParentDDL()
         {
             var result = await _repo.Dropdown.GetParentDDL();
@@ -29,7 +28,7 @@ namespace SocietyManagementWebApi.Controllers.Dropdown
 
 
         }
-        [HttpGet("GetMasterTypeParentDDL")]
+        [HttpGet("master-type-detail-parent")]
         public async Task<IActionResult> GetMasterTypeParentDDL()
         {
             var result = await _repo.Dropdown.GetMasterTypeParentDDL();
@@ -41,5 +40,5 @@ namespace SocietyManagementWebApi.Controllers.Dropdown
 
 
 
-     }
+    }
 }

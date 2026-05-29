@@ -15,7 +15,7 @@ namespace SocietyManagementWebApi.Controllers.MasterType
             _repo = repo;
         }
 
-        [HttpPost("CreateMasterType")]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateMasterType(MasterTypeDTO input)
         {
             var result = await _repo.MasterType.CreateMasterType(input);
@@ -23,7 +23,7 @@ namespace SocietyManagementWebApi.Controllers.MasterType
         }
 
 
-        [HttpGet("GetAll")]
+        [HttpGet("get-all")]
 
         public async Task<IActionResult> GetAll()
         {
@@ -33,7 +33,7 @@ namespace SocietyManagementWebApi.Controllers.MasterType
         }
 
 
-        [HttpGet("GetById/{id}")]
+        [HttpGet("get-by-id/{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var result = await _repo.MasterType.GetMasterTypeById(id);
@@ -41,7 +41,7 @@ namespace SocietyManagementWebApi.Controllers.MasterType
         }
 
 
-        [HttpPut("UpdateMasterType")]
+        [HttpPut("update")]
 
         public async Task<IActionResult> UpdateMasterType (MasterTypeDTO input)
         {
@@ -51,7 +51,7 @@ namespace SocietyManagementWebApi.Controllers.MasterType
         }
         
 
-            [HttpDelete("DeleteMasterType/{id}")]
+            [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteMasterType(int id)
         {
             var result = await _repo.MasterType.DeleteMasterType(id);

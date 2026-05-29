@@ -1,14 +1,12 @@
-﻿using Application.DTOs.Dropdown;
+﻿using Application.DTOs;
+using Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Application.Repositories
 {
     public class DropdownRepository : IDropdownRepository
     {
-        private readonly Data.MissionEducationDbContext _db;
+        private readonly MissionEducationDbContext _db;
         public DropdownRepository(Data.MissionEducationDbContext db)
         {
             _db = db;
@@ -18,7 +16,7 @@ namespace Application.Repositories
         {
             var data = await (from mt in _db.MasterTypes
                               where mt.IsDelete == 0 && mt.IsActive == 1
-                              select new DTOs.Dropdown.DropdownDTO()
+                              select new DropdownDTO()
                               {
                                   Id = mt.Id,
                                   Name = mt.Name
@@ -29,8 +27,8 @@ namespace Application.Repositories
         public async Task<List<DropdownDTO>> GetParentDDL()
         {
             var data = await (from mtd in _db.MasterTypeDetails
-                              where mtd.IsDelete == 0 && mtd.IsActive == 1 
-                              select new DTOs.Dropdown.DropdownDTO()
+                              where mtd.IsDelete == 0 && mtd.IsActive == 1
+                              select new DropdownDTO()
                               {
                                   Id = mtd.Id,
                                   Name = mtd.Name
@@ -43,7 +41,7 @@ namespace Application.Repositories
 
             var data = await (from mtd in _db.MasterTypeDetails
                               where mtd.IsDelete == 0 && mtd.IsActive == 1 && mtd.ParentId == null
-                              select new DTOs.Dropdown.DropdownDTO()
+                              select new DropdownDTO()
                               {
                                   Id = mtd.Id,
                                   Name = mtd.Name
@@ -51,6 +49,6 @@ namespace Application.Repositories
             return data;
         }
 
-        
+
     }
 }
