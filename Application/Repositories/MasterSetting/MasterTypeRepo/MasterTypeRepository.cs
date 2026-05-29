@@ -18,6 +18,7 @@ namespace Application.Repositories
 
             MasterType masterType = new MasterType
             {
+                Srno = input.Srno,
                 Name = input.Name,
                 ParentId = input.ParentId,
                 IsActive = input.IsActive ?? 0,
@@ -46,6 +47,7 @@ namespace Application.Repositories
                                      select new MasterTypeDTO()
                                      {
                                          Id = mt.Id,
+                                         Srno = mt.Srno,
                                          Name = mt.Name,
                                          ParentId = mt.ParentId,
                                          IsActive = mt.IsActive
@@ -61,6 +63,7 @@ namespace Application.Repositories
                 .Select(x => new MasterTypeDTO
                 {
                     Id = x.Id,
+                    Srno = x.Srno,
                     Name = x.Name,
                     ParentId = x.ParentId,
                     IsActive = x.IsActive
@@ -97,7 +100,7 @@ namespace Application.Repositories
                     Message = "MasterType Not Found"
                 };
             }
-
+            existingMasterType.Srno = input.Srno;
             existingMasterType.Name = input.Name;
             existingMasterType.ParentId = input.ParentId;
             existingMasterType.IsActive = input.IsActive ?? 0;

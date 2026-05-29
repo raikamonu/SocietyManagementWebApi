@@ -23,6 +23,7 @@ namespace Application.Repositories
             {
                 MasterTypeDetail masterTypeDetail = new MasterTypeDetail()
                 {
+                    Srno = input.Srno,
                     Code = input.Code,
                     Name = input.Name,
                     ParentId = input.ParentId,
@@ -55,6 +56,7 @@ namespace Application.Repositories
                                            select new MasterTypeDetailDTO()
                                            {
                                                Id = mtd.Id,
+                                                  Srno = mtd.Srno,
                                                Code = mtd.Code,
                                                Name = mtd.Name,
                                                ParentId = mtd.ParentId,
@@ -73,6 +75,7 @@ namespace Application.Repositories
                 .Select(x => new MasterTypeDetailDTO
                 {
                     Id = x.Id,
+                    Srno = x.Srno,
                     Code = x.Code,
                     Name = x.Name,
                     ParentId = x.ParentId,
@@ -110,6 +113,7 @@ namespace Application.Repositories
                     Message = "MasterTypeDetail Not Found"
                 };
             }
+            existingMasterTypeDetail.Srno = input.Srno;
             existingMasterTypeDetail.Code = input.Code;
             existingMasterTypeDetail.Name = input.Name;
             existingMasterTypeDetail.ParentId = input.ParentId;

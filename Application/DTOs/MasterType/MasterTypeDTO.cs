@@ -6,6 +6,7 @@ namespace Application.DTOs
     public class MasterTypeDTO
     { 
         public int? Id { get; set; }
+        public decimal? Srno { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         public string? Name { get; set; }
