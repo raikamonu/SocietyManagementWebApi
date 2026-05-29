@@ -12,10 +12,14 @@ namespace Application.Repositories
             _db = db;
         }
 
+
         public async Task<List<DropdownDTO>> GetMasterTypeDDL()
         {
             var data = await (from mt in _db.MasterTypes
-                              where mt.IsDelete == 0 && mt.IsActive == 1
+                              where mt.IsDelete == 0
+                              && mt.IsActive == 1
+                               && mt.Name != null
+                               && mt.Name != ""
                               select new DropdownDTO()
                               {
                                   Id = mt.Id,
@@ -24,28 +28,20 @@ namespace Application.Repositories
             return data;
         }
 
-        public async Task<List<DropdownDTO>> GetParentDDL()
+       
+        public async Task<List<DropdownDTO>> GetTypeDetailList()
         {
             var data = await (from mtd in _db.MasterTypeDetails
-                              where mtd.IsDelete == 0 && mtd.IsActive == 1
+                              where mtd.IsDelete == 0
+                              && mtd.IsActive == 1
+                              && mtd.Name != null
+                              && mtd.Name != ""
                               select new DropdownDTO()
                               {
                                   Id = mtd.Id,
                                   Name = mtd.Name
                               }).ToListAsync();
-            return data;
-        }
 
-        public async Task<List<DropdownDTO>> GetMasterTypeParentDDL()
-        {
-
-            var data = await (from mtd in _db.MasterTypeDetails
-                              where mtd.IsDelete == 0 && mtd.IsActive == 1 && mtd.ParentId == null
-                              select new DropdownDTO()
-                              {
-                                  Id = mtd.Id,
-                                  Name = mtd.Name
-                              }).ToListAsync();
             return data;
         }
 

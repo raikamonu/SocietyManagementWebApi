@@ -20,22 +20,15 @@ namespace SocietyManagementWebApi.Controllers.Dropdown
             return Ok(result);
         }
 
-        [HttpGet("master-type-parent")]
-        public async Task<IActionResult> GetParentDDL()
+
+        [HttpGet("type-detail-list")]
+        public async Task<IActionResult> GetTypeDetailList()
         {
-            var result = await _repo.Dropdown.GetParentDDL();
+            var result = await _repo.Dropdown.GetTypeDetailList();
             return Ok(result);
-
-
-        }
-        [HttpGet("master-type-detail-parent")]
-        public async Task<IActionResult> GetMasterTypeParentDDL()
-        {
-            var result = await _repo.Dropdown.GetMasterTypeParentDDL();
-            return Ok(result);
-
         }
 
+       
 
 
 
