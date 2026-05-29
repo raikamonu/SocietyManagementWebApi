@@ -1,4 +1,6 @@
-﻿namespace Application.DTOs
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Application.DTOs
 {
     public class MasterTypeDetailDTO
     {
@@ -6,6 +8,8 @@
 
         public string? Code { get; set; }
 
+
+        [Required(ErrorMessage = "Name is required")]
         public string? Name { get; set; }
 
         public int? ParentId { get; set; }

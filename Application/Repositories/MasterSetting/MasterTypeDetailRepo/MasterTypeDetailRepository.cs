@@ -15,22 +15,37 @@ namespace Application.Repositories
             _db = db;
         }
 
+        
+
         public async Task<object> CreateMasterTypeDetail(MasterTypeDetailDTO input)
         {
-            MasterTypeDetail masterTypeDetail = new MasterTypeDetail()
+            try
             {
-                Code = input.Code,
-                Name = input.Name,
-                ParentId = input.ParentId,
-                MasterTypeId = input.MasterTypeId,
-                IsActive = input.IsActive ?? 0,
-                IsDelete = 0,
-                IsEdit = 0,
-                Date = DateTime.Now
-            };
-            await _db.MasterTypeDetails.AddAsync(masterTypeDetail);
-            await _db.SaveChangesAsync();
-            return new { Success = true, Message = "Master type detail created successfully" };
+                MasterTypeDetail masterTypeDetail = new MasterTypeDetail()
+                {
+                    Code = input.Code,
+                    Name = input.Name,
+                    ParentId = input.ParentId,
+                    MasterTypeId = input.MasterTypeId,
+                    IsActive = input.IsActive ?? 0,
+                    IsDelete = 0,
+                    IsEdit = 0,
+                    Date = DateTime.Now
+                };
+
+                await _db.MasterTypeDetails.AddAsync(masterTypeDetail);
+                await _db.SaveChangesAsync();
+
+                return new { Success = true, Message = "Created successfully" };
+            }
+            catch (Exception ex)
+            {
+                return new
+                {
+                    Success = false,
+                    Message = ex.InnerException?.Message ?? ex.Message
+                };
+            }
         }
 
         public async Task<List<MasterTypeDetailDTO>> GetAllMasterTypeDetail()

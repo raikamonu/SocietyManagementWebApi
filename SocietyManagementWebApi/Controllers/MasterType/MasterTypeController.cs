@@ -18,6 +18,10 @@ namespace SocietyManagementWebApi.Controllers.MasterType
         [HttpPost("create")]
         public async Task<IActionResult> CreateMasterType(MasterTypeDTO input)
         {
+            if (string.IsNullOrWhiteSpace(input.Name))
+            {
+                return BadRequest("Name cannot be null or empty");
+            }
             var result = await _repo.MasterType.CreateMasterType(input);
             return Ok(result);
         }
@@ -45,6 +49,10 @@ namespace SocietyManagementWebApi.Controllers.MasterType
 
         public async Task<IActionResult> UpdateMasterType (MasterTypeDTO input)
         {
+            if (string.IsNullOrWhiteSpace(input.Name))
+            {
+                return BadRequest("Name cannot be null or empty");
+            }
             var result = await _repo.MasterType.UpdateMasterType(input); 
             return Ok(result);
 

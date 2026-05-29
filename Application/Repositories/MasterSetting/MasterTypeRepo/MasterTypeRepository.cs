@@ -15,6 +15,7 @@ namespace Application.Repositories
 
         public async Task<object> CreateMasterType(MasterTypeDTO input)
         {
+
             MasterType masterType = new MasterType
             {
                 Name = input.Name,
@@ -39,6 +40,7 @@ namespace Application.Repositories
  */
         public async Task<List<MasterTypeDTO>> GetAllMasterType()
         {
+
             var masterTypes = await (from mt in _db.MasterTypes
                                      where mt.IsDelete == 0
                                      select new MasterTypeDTO()
