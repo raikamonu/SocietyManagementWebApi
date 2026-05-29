@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Application.DTOs.Dropdown;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,10 +14,10 @@ namespace Application.Repositories
             _db = db;
         }
 
-        public async Task<List<DTOs.Dropdown.DropdownDTO>> GetMasterTypeDDL()
+        public async Task<List<DropdownDTO>> GetMasterTypeDDL()
         {
             var data = await (from mt in _db.MasterTypes
-                              where mt.IsDelete == 0
+                              where mt.IsDelete == 0 && mt.IsActive == 1
                               select new DTOs.Dropdown.DropdownDTO()
                               {
                                   Id = mt.Id,
@@ -25,10 +26,10 @@ namespace Application.Repositories
             return data;
         }
 
-        public async Task<List<DTOs.Dropdown.DropdownDTO>> GetParentDDL()
+        public async Task<List<DropdownDTO>> GetParentDDL()
         {
             var data = await (from mtd in _db.MasterTypeDetails
-                              where mtd.IsDelete == 0
+                              where mtd.IsDelete == 0 && mtd.IsActive == 1 
                               select new DTOs.Dropdown.DropdownDTO()
                               {
                                   Id = mtd.Id,
@@ -36,5 +37,20 @@ namespace Application.Repositories
                               }).ToListAsync();
             return data;
         }
+
+        public async Task<List<DropdownDTO>> GetMasterTypeParentDDL()
+        {
+
+            var data = await (from mtd in _db.MasterTypeDetails
+                              where mtd.IsDelete == 0 && mtd.IsActive == 1 && mtd.ParentId == null
+                              select new DTOs.Dropdown.DropdownDTO()
+                              {
+                                  Id = mtd.Id,
+                                  Name = mtd.Name
+                              }).ToListAsync();
+            return data;
+        }
+
+        
     }
 }

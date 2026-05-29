@@ -10,5 +10,7 @@ namespace Application.Repositories
     {
         Task<List<DropdownDTO>> GetParentDDL();
         Task<List<DropdownDTO>> GetMasterTypeDDL();
+        Task<List<DropdownDTO>> GetMasterTypeParentDDL();
+
     }
 }

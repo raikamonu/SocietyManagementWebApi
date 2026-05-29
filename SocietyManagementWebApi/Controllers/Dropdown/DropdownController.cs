@@ -29,5 +29,17 @@ namespace SocietyManagementWebApi.Controllers.Dropdown
 
 
         }
-    }
+        [HttpGet("GetMasterTypeParentDDL")]
+        public async Task<IActionResult> GetMasterTypeParentDDL()
+        {
+            var result = await _repo.Dropdown.GetMasterTypeParentDDL();
+            return Ok(result);
+
+        }
+
+
+
+
+
+     }
 }
