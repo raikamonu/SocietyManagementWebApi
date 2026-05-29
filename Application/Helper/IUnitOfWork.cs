@@ -5,5 +5,9 @@ namespace Application.Helper
     public interface IUnitOfWork
     {
         IMasterTypeRepository MasterType { get; }
+
+        IMasterTypeDetailRepository MasterTypeDetail { get; }
+
+
     }
 }
