@@ -28,7 +28,22 @@ namespace SocietyManagementWebApi.Controllers.Dropdown
             return Ok(result);
         }
 
-       
+
+        [HttpGet("location-list")]
+        public async Task<IActionResult> GetLocationDDL()
+        {
+            var result = await _repo.Dropdown.GetLocationDDL();
+            return Ok(result);
+        }
+
+
+
+        [HttpGet("typeById")]
+        public async Task<IActionResult> GetTypeById(int typeId)
+        {
+            var result = await _repo.Dropdown.GetTypeById(typeId);
+            return Ok(result);
+        }
 
 
 

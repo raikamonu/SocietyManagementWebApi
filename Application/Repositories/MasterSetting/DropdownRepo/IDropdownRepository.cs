@@ -6,6 +6,8 @@ namespace Application.Repositories
     {
         Task<List<DropdownDTO>> GetTypeDetailList();
         Task<List<DropdownDTO>> GetMasterTypeDDL();
+        Task<List<DropdownDTO>> GetLocationDDL();
+        Task<List<DropdownDTO>> GetTypeById(int typeId);
 
     }
 }

@@ -9,5 +9,7 @@ namespace Application.Helper
         IMasterTypeDetailRepository MasterTypeDetail { get; }
 
         IDropdownRepository Dropdown { get; }
+
+        ILocationRepository Location { get; }
     }
 }

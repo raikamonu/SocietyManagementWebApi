@@ -10,6 +10,8 @@ namespace Application.Helper
         public IMasterTypeRepository MasterType { get; private set; }
         public IMasterTypeDetailRepository MasterTypeDetail { get; private set; }
         public IDropdownRepository Dropdown { get; private set; }
+        public ILocationRepository Location { get; private set; }
+
         public UnitOfWork(MissionEducationDbContext db)
         {
             _db = db;
@@ -17,6 +19,7 @@ namespace Application.Helper
             MasterType = new MasterTypeRepository(db);
             MasterTypeDetail = new MasterTypeDetailRepository(db);
             Dropdown = new DropdownRepository(db);
+            Location = new LocationRepository(db);
         }
     }
 }
