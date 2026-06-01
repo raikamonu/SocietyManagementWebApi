@@ -11,6 +11,8 @@ namespace Application.Helper
         public IMasterTypeDetailRepository MasterTypeDetail { get; private set; }
         public IDropdownRepository Dropdown { get; private set; }
         public ILocationRepository Location { get; private set; }
+        public ISessionRepository Session { get; private set; }
+        
 
         public UnitOfWork(MissionEducationDbContext db)
         {
@@ -20,6 +22,7 @@ namespace Application.Helper
             MasterTypeDetail = new MasterTypeDetailRepository(db);
             Dropdown = new DropdownRepository(db);
             Location = new LocationRepository(db);
+            Session = new SessionRepository(db);
         }
     }
 }

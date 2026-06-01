@@ -11,5 +11,7 @@ namespace Application.Helper
         IDropdownRepository Dropdown { get; }
 
         ILocationRepository Location { get; }
+        ISessionRepository Session { get; }
+        
     }
 }

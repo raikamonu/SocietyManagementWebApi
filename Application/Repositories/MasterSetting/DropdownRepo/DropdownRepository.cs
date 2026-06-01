@@ -69,12 +69,18 @@ namespace Application.Repositories
 
 
 
+        //public async Task<List<DropdownDTO>> GetSessionDDL()
+        //{
+        //    var data = await (from s in _db.Sessions
+        //                      where s.IsActive == 1
+        //                      select new DropdownDTO
+        //                      {
+        //                          Id = s.Id,
+        //                          Name = s.Name
+        //                      }).ToListAsync();
 
-
-
-
-
-
+        //    return data;
+        //}
 
 
 

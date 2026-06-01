@@ -8,6 +8,7 @@ namespace Application.Repositories
         Task<List<DropdownDTO>> GetMasterTypeDDL();
         Task<List<DropdownDTO>> GetLocationDDL();
         Task<List<DropdownDTO>> GetTypeById(int typeId);
+        //Task<List<DropdownDTO>> GetSessionDDL();
 
     }
 }

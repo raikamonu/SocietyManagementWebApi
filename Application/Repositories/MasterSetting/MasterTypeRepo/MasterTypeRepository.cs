@@ -33,12 +33,7 @@ namespace Application.Repositories
         }
 
 
-        /* public async Task<object> GetAllMasterType()
-         {
-             var masterTypes = await _db.MasterTypes.Where(x => x.IsDelete == 0).ToListAsync();
-             return new { Success = true, Data = masterTypes };
-         }
- */
+       
         public async Task<List<MasterTypeDTO>> GetAllMasterType()
         {
 
