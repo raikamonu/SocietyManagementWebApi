@@ -11,7 +11,9 @@ namespace Application.DTOs
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public int? SessionTypeId { get; set; }
-        //public string? SessionTypeName { get; set; }
+        public string? SessionTypeName { get; set; }
         public int? IsActive { get; set; }
+
+        public int? IsDelete { get; set; }
     }
 }

@@ -49,8 +49,7 @@ namespace Application.Repositories
             //}
         }
 
-
-
+        
         public async Task<List<LocationDTO>> GetAllLocation()
         {
             var locations = await _db.Locations

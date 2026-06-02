@@ -5,7 +5,6 @@ using Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Application.Repositories
 {
@@ -20,44 +19,107 @@ namespace Application.Repositories
 
         public async Task<object> CreateSession(SessionDTO input)
         {
-            Session session = new Session
+            try
             {
-                Name = input.Name,
-                SessionTypeId = input.SessionTypeId,
-                StartDate = input.StartDate,
-                EndDate = input.EndDate,
-                IsActive = input.IsActive ?? 1
-            };
+                if (string.IsNullOrWhiteSpace(input.Name))
+                {
+                    return new
+                    {
+                        Success = false,
+                        Message = "Session Name is required"
+                    };
+                }
 
-            await _db.Sessions.AddAsync(session);
-            await _db.SaveChangesAsync();
+                if (input.StartDate == null || input.EndDate == null)
+                {
+                    return new
+                    {
+                        Success = false,
+                        Message = "Start Date and End Date are required"
+                    };
+                }
 
-            return new
+                if (input.StartDate >= input.EndDate)
+                {
+                    return new
+                    {
+                        Success = false,
+                        Message = "Start Date must be less than End Date"
+                    };
+                }
+
+                if (input.SessionTypeId == null)
+                {
+                    return new
+                    {
+                        Success = false,
+                        Message = "Session Type is required"
+                    };
+                }
+
+                var sessionTypeExists = await _db.MasterTypeDetails
+                    .AnyAsync(x => x.Id == input.SessionTypeId);
+
+                if (!sessionTypeExists)
+                {
+                    return new
+                    {
+                        Success = false,
+                        Message = "Invalid Session Type"
+                    };
+                }
+
+                Session session = new Session
+                {
+                    Name = input.Name,
+                    SessionTypeId = input.SessionTypeId,
+                    StartDate = input.StartDate,
+                    EndDate = input.EndDate,
+                    IsActive = input.IsActive ?? 1,
+                    IsDelete = 0
+                };
+
+                await _db.Sessions.AddAsync(session);
+                await _db.SaveChangesAsync();
+
+                return new
+                {
+                    Success = true,
+                    Message = "Session Created Successfully"
+                };
+            }
+            catch (Exception ex)
             {
-                Success = true,
-                Message = "Session Created Successfully"
-            };
+                return new
+                {
+                    Success = false,
+                    Message = ex.InnerException?.Message ?? ex.Message
+                };
+            }
         }
-
-        
-
 
         public async Task<List<SessionDTO>> GetAllSession()
         {
-            var sessions = await (from s in _db.Sessions
-                                  where s.IsActive == 1
-                                  select new SessionDTO
-                                  {
-                                      Id = s.Id,
-                                      Name = s.Name,
-                                      SessionTypeId = s.SessionTypeId,
-                                      StartDate = s.StartDate,
-                                      EndDate = s.EndDate,
-                                      IsActive = s.IsActive
-                                  }).ToListAsync();
-           
+            var sessions = await _db.Sessions
+                .Select(s => new SessionDTO
+                {
+                    Id = s.Id,
+                    Name = s.Name,
+                    SessionTypeId = s.SessionTypeId,
+                    SessionTypeName = s.SessionType != null
+                                        ? s.SessionType.Name
+                                        : null,
+                    StartDate = s.StartDate,
+                    EndDate = s.EndDate,
+                    IsActive = s.IsActive
+                })
+                .ToListAsync();
+
             return sessions;
         }
+
+
+
         public async Task<object> GetSessionById(int id)
         {
             var data = await _db.Sessions
@@ -67,6 +129,9 @@ namespace Application.Repositories
                     Id = x.Id,
                     Name = x.Name,
                     SessionTypeId = x.SessionTypeId,
+                    SessionTypeName = x.SessionType != null
+                                        ? x.SessionType.Name
+                                        : null,
                     StartDate = x.StartDate,
                     EndDate = x.EndDate,
                     IsActive = x.IsActive
@@ -91,32 +156,65 @@ namespace Application.Repositories
 
         public async Task<object> UpdateSession(SessionDTO input)
         {
-            var existingSession = await _db.Sessions
-                .FirstOrDefaultAsync(x => x.Id == input.Id);
+            try
+            {
+                var existingSession = await _db.Sessions
+                    .FirstOrDefaultAsync(x => x.Id == input.Id);
 
-            if (existingSession == null)
+                if (existingSession == null)
+                {
+                    return new
+                    {
+                        Success = false,
+                        Message = "Session Not Found"
+                    };
+                }
+
+                if (input.StartDate >= input.EndDate)
+                {
+                    return new
+                    {
+                        Success = false,
+                        Message = "Start Date must be less than End Date"
+                    };
+                }
+
+                var sessionTypeExists = await _db.MasterTypeDetails
+                    .AnyAsync(x => x.Id == input.SessionTypeId);
+
+                if (!sessionTypeExists)
+                {
+                    return new
+                    {
+                        Success = false,
+                        Message = "Invalid Session Type"
+                    };
+                }
+
+                existingSession.Name = input.Name;
+                existingSession.SessionTypeId = input.SessionTypeId;
+                existingSession.StartDate = input.StartDate;
+                existingSession.EndDate = input.EndDate;
+                existingSession.IsActive = input.IsActive ?? 1;
+
+                await _db.SaveChangesAsync();
+
+                return new
+                {
+                    Success = true,
+                    Message = "Session Updated Successfully"
+                };
+            }
+            catch (Exception ex)
             {
                 return new
                 {
                     Success = false,
-                    Message = "Session Not Found"
+                    Message = ex.InnerException?.Message ?? ex.Message
                 };
             }
-
-            existingSession.Name = input.Name;
-            existingSession.SessionTypeId = input.SessionTypeId;
-            existingSession.StartDate = input.StartDate;
-            existingSession.EndDate = input.EndDate;
-            existingSession.IsActive = input.IsActive ?? 1;
-
-            await _db.SaveChangesAsync();
-
-            return new
-            {
-                Success = true,
-                Message = "Session Updated Successfully"
-            };
         }
+
 
         public async Task<object> DeleteSession(int id)
         {
