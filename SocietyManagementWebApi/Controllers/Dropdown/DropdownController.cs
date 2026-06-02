@@ -46,17 +46,19 @@ namespace SocietyManagementWebApi.Controllers.Dropdown
         }
 
 
-        //[HttpGet("session-list")]
-        //public async Task<IActionResult> GetSessionDDL()
+        //[HttpGet("session-type-list")]
+        //public async Task<IActionResult> GetSessionTypeDDL()
         //{
-        //    var result = await _repo.Dropdown.GetSessionDDL();
+        //    var result = await _repo.Dropdown.GetSessionTypeDDL();
         //    return Ok(result);
-
-
         //}
 
-
-
+        [HttpGet("session-list")]
+        public async Task<IActionResult> GetSessionDDL()
+        {
+            var result = await _repo.Dropdown.GetSessionDDL();
+            return Ok(result);
+        }
 
 
 

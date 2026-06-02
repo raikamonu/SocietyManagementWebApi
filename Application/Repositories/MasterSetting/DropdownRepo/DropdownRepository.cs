@@ -68,21 +68,35 @@ namespace Application.Repositories
         }
 
 
-
-        //public async Task<List<DropdownDTO>> GetSessionDDL()
+        //public async Task<List<DropdownDTO>> GetSessionTypeDDL()
         //{
-        //    var data = await (from s in _db.Sessions
-        //                      where s.IsActive == 1
+        //    var data = await (from mtd in _db.MasterTypeDetails
         //                      select new DropdownDTO
         //                      {
-        //                          Id = s.Id,
-        //                          Name = s.Name
+        //                          Id = mtd.Id,
+        //                          Name = mtd.Name
         //                      }).ToListAsync();
 
         //    return data;
         //}
 
 
+
+
+
+        public async Task<List<DropdownDTO>> GetSessionDDL()
+        {
+            var data = await _db.Sessions
+                .Where(x => x.IsActive == 1)
+                .Select(x => new DropdownDTO
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                })
+                .ToListAsync();
+
+            return data;
+        }
 
 
     }
