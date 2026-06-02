@@ -57,7 +57,7 @@ namespace Application.Repositories
         public async Task<List<DropdownDTO>> GetLocationDDL()
         {
             var data = await (from l in _db.Locations
-                              where l.IsActive == 1 
+                              where l.IsActive == 1  
                               select new DropdownDTO()
                               {
                                   Id = l.Id,

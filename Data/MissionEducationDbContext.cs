@@ -636,6 +636,7 @@ public partial class MissionEducationDbContext : DbContext
 
             entity.Property(e => e.EndDate).HasColumnType("datetime");
             entity.Property(e => e.IsActive).HasDefaultValueSql("('1')");
+            entity.Property(e => e.IsDelete).HasDefaultValueSql("('0')");
             entity.Property(e => e.Name)
                 .HasMaxLength(200)
                 .IsUnicode(false);

@@ -16,6 +16,7 @@ public partial class Session
     public DateTime? EndDate { get; set; }
 
     public int IsActive { get; set; }
+    public int IsDelete { get; set; }
 
     public virtual ICollection<Academic> Academics { get; set; } = new List<Academic>();
 

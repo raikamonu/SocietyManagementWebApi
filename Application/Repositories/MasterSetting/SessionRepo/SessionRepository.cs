@@ -120,8 +120,7 @@ namespace Application.Repositories
 
         public async Task<object> DeleteSession(int id)
         {
-            var data = await _db.Sessions
-                .FirstOrDefaultAsync(x => x.Id == id);
+            var data = await _db.Sessions.FirstOrDefaultAsync(x => x.Id == id);
 
             if (data == null)
             {
