@@ -48,15 +48,6 @@ namespace Application.Repositories
                     };
                 }
 
-                if (input.SessionTypeId == null)
-                {
-                    return new
-                    {
-                        Success = false,
-                        Message = "Session Type is required"
-                    };
-                }
-
                 var sessionTypeExists = await _db.MasterTypeDetails
                     .AnyAsync(x => x.Id == input.SessionTypeId);
 
@@ -101,14 +92,12 @@ namespace Application.Repositories
         public async Task<List<SessionDTO>> GetAllSession()
         {
             var sessions = await _db.Sessions
+                .Where(x => x.IsDelete == 0)
                 .Select(s => new SessionDTO
                 {
                     Id = s.Id,
                     Name = s.Name,
                     SessionTypeId = s.SessionTypeId,
-                    SessionTypeName = s.SessionType != null
-                                        ? s.SessionType.Name
-                                        : null,
                     StartDate = s.StartDate,
                     EndDate = s.EndDate,
                     IsActive = s.IsActive
@@ -119,19 +108,15 @@ namespace Application.Repositories
         }
 
 
-
         public async Task<object> GetSessionById(int id)
         {
             var data = await _db.Sessions
-                .Where(x => x.Id == id)
+                .Where(x => x.Id == id && x.IsDelete == 0)
                 .Select(x => new SessionDTO
                 {
                     Id = x.Id,
                     Name = x.Name,
                     SessionTypeId = x.SessionTypeId,
-                    SessionTypeName = x.SessionType != null
-                                        ? x.SessionType.Name
-                                        : null,
                     StartDate = x.StartDate,
                     EndDate = x.EndDate,
                     IsActive = x.IsActive
@@ -187,12 +172,12 @@ namespace Application.Repositories
                     return new
                     {
                         Success = false,
-                        Message = "Invalid Session Type"
+                        Message = "Invalid Session Type"////move
                     };
                 }
 
                 existingSession.Name = input.Name;
-                existingSession.SessionTypeId = input.SessionTypeId;
+                //existingSession.SessionTypeId = input.SessionTypeId;
                 existingSession.StartDate = input.StartDate;
                 existingSession.EndDate = input.EndDate;
                 existingSession.IsActive = input.IsActive ?? 1;
@@ -230,7 +215,8 @@ namespace Application.Repositories
                 };
             }
 
-            _db.Sessions.Remove(data);
+            data.IsDelete = 1;
+
             await _db.SaveChangesAsync();
 
             return new
@@ -240,8 +226,7 @@ namespace Application.Repositories
             };
         }
 
-
-
+        
     }
 }
 
