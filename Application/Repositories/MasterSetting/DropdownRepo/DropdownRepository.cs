@@ -100,7 +100,7 @@ namespace Application.Repositories
         public async Task<List<DropdownDTO>> GetStateDDL()
         {
             return await _db.Locations
-                .Where(x => x.ParentId == null && x.IsActive == 1)
+                .Where(x => x.ParentId == null && x.TypeId== 1 && x.IsActive == 1)
                 .Select(x => new DropdownDTO
                 {
                     Id = x.Id,
@@ -109,10 +109,10 @@ namespace Application.Repositories
                 .ToListAsync();
         }
 
-        public async Task<List<DropdownDTO>> GetCityDDL(int stateId)
+        public async Task<List<DropdownDTO>> GetCommonLocation(int typeId,int parentId)
         {
             return await _db.Locations
-                .Where(x => x.ParentId == stateId && x.IsActive == 1)
+                .Where(x => x.ParentId == parentId && x.TypeId==typeId && x.IsActive == 1)
                 .Select(x => new DropdownDTO
                 {
                     Id = x.Id,

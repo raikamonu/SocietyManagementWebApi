@@ -11,7 +11,7 @@ namespace Application.Repositories
         //Task<List<DropdownDTO>> GetSessionDDL();
         Task<List<DropdownDTO>> GetSessionDDL(int sessionId);
         Task<List<DropdownDTO>> GetStateDDL();
-        Task<List<DropdownDTO>> GetCityDDL(int stateId);
+        Task<List<DropdownDTO>> GetCommonLocation(int typeId, int parentId);
 
 
     }

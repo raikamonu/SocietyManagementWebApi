@@ -68,10 +68,10 @@ namespace SocietyManagementWebApi.Controllers.Dropdown
             return Ok(result);
         }
 
-        [HttpGet("city-list")]
-        public async Task<IActionResult> GetCityDDL(int stateId)
+        [HttpGet("common-location-list")]
+        public async Task<IActionResult> GetCommonLocation(int typeId, int parentId)
         {
-            var result = await _repo.Dropdown.GetCityDDL(stateId);
+            var result = await _repo.Dropdown.GetCommonLocation(typeId, parentId);
             return Ok(result);
         }
 
