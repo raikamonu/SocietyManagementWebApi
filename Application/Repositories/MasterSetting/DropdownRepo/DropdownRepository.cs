@@ -76,13 +76,8 @@ namespace Application.Repositories
         //                          Id = mtd.Id,
         //                          Name = mtd.Name
         //                      }).ToListAsync();
-
         //    return data;
-        //}
-
-
-
-
+        //} 
 
         public async Task<List<DropdownDTO>> GetSessionDDL()
         {
