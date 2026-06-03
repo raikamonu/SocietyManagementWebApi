@@ -68,21 +68,22 @@ namespace Application.Repositories
         }
 
 
-        //public async Task<List<DropdownDTO>> GetSessionTypeDDL()
+        //public async Task<List<DropdownDTO>> GetSessionDDL()
         //{
-        //    var data = await (from mtd in _db.MasterTypeDetails
-        //                      select new DropdownDTO
-        //                      {
-        //                          Id = mtd.Id,
-        //                          Name = mtd.Name
-        //                      }).ToListAsync();
-        //    return data;
-        //} 
+        //    return await _db.Sessions
+        //        .Where(x => x.IsDelete == 0)
+        //        .Select(x => new DropdownDTO
+        //        {
+        //            Id = x.Id,
+        //            Name = x.Name
+        //        })
+        //        .ToListAsync();
+        //}
 
-        public async Task<List<DropdownDTO>> GetSessionDDL()
+        public async Task<List<DropdownDTO>> GetSessionDDL(int sessionId)
         {
             var data = await _db.Sessions
-                .Where(x => x.IsActive == 1)
+                .Where(x => x.IsDelete == 0 && x.Id == sessionId)
                 .Select(x => new DropdownDTO
                 {
                     Id = x.Id,
@@ -92,6 +93,72 @@ namespace Application.Repositories
 
             return data;
         }
+
+
+
+
+        public async Task<List<DropdownDTO>> GetStateDDL()
+        {
+            return await _db.Locations
+                .Where(x => x.ParentId == null && x.IsActive == 1)
+                .Select(x => new DropdownDTO
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                })
+                .ToListAsync();
+        }
+
+        public async Task<List<DropdownDTO>> GetCityDDL(int stateId)
+        {
+            return await _db.Locations
+                .Where(x => x.ParentId == stateId && x.IsActive == 1)
+                .Select(x => new DropdownDTO
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                })
+                .ToListAsync();
+        }
+
+
+
+
+        //public async Task<List<DropdownDTO>> GetStateDDL()
+        //{
+        //    return await _db.MasterTypeDetails
+        //        .Where(x => x.ParentId == null
+        //                 && x.IsActive == 1)
+        //        .Select(x => new DropdownDTO
+        //        {
+        //            Id = x.Id,
+        //            Name = x.Name
+        //        })
+        //        .ToListAsync();
+        //}
+
+
+
+
+        //public async Task<List<DropdownDTO>> GetCityDDL(int stateId)
+        //{
+        //    return await _db.MasterTypeDetails
+        //        .Where(x => x.ParentId == stateId
+        //                 && x.IsActive == 1
+        //                 && x.IsDelete == 0)
+        //        .Select(x => new DropdownDTO
+        //        {
+        //            Id = x.Id,
+        //            Name = x.Name
+        //        })
+        //        .ToListAsync();
+        //}
+
+
+
+
+
+
 
 
     }

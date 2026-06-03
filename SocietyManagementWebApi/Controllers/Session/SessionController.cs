@@ -55,10 +55,11 @@ namespace SocietyManagementWebApi.Controllers.Session
             return Ok(result);
         }
 
+     
 
 
 
 
 
-    }
+        }
 }
