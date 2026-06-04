@@ -14,9 +14,9 @@ namespace SocietyManagementWebApi.Controllers.Dropdown
         }
 
         [HttpGet("master-type")]
-        public async Task<IActionResult> GetMasterTypeDDL()
+        public async Task<IActionResult> GetMasterType()
         {
-            var result = await _repo.Dropdown.GetMasterTypeDDL();
+            var result = await _repo.Dropdown.GetMasterType();
             return Ok(result);
         }
 
@@ -30,9 +30,9 @@ namespace SocietyManagementWebApi.Controllers.Dropdown
 
 
         [HttpGet("location-list")]
-        public async Task<IActionResult> GetLocationDDL()
+        public async Task<IActionResult> GetLocation()
         {
-            var result = await _repo.Dropdown.GetLocationDDL();
+            var result = await _repo.Dropdown.GetLocation();
             return Ok(result);
         }
 
@@ -47,17 +47,17 @@ namespace SocietyManagementWebApi.Controllers.Dropdown
 
 
         [HttpGet("session-list")]
-        public async Task<IActionResult> GetSessionDDL(int sessionTypeId)
+        public async Task<IActionResult> GetSession(int sessionTypeId)
         {
-            var result = await _repo.Dropdown.GetSessionDDL(sessionTypeId);
+            var result = await _repo.Dropdown.GetSession(sessionTypeId);
             return Ok(result);
         }
 
 
         [HttpGet("state-list")]
-        public async Task<IActionResult> GetStateDDL()
+        public async Task<IActionResult> GetState()
         {
-            var result = await _repo.Dropdown.GetStateDDL();
+            var result = await _repo.Dropdown.GetState();
             return Ok(result);
         }
 
@@ -72,9 +72,9 @@ namespace SocietyManagementWebApi.Controllers.Dropdown
 
 
         [HttpGet("program-list")]
-        public async Task<IActionResult> GetProgramDDL()
+        public async Task<IActionResult> GetProgram()
         {
-            var result = await _repo.Dropdown.GetProgramDDL();
+            var result = await _repo.Dropdown.GetProgram();
             return Ok(result);
         }
 
@@ -85,32 +85,11 @@ namespace SocietyManagementWebApi.Controllers.Dropdown
         public async Task<IActionResult> GetMembershipPlanDropdown()
         {
 
-            var result = await _repo.Dropdown.GetMembershipPlanDDL();
+            var result = await _repo.Dropdown.GetMembershipPlan();
             return Ok(result);
         }
 
 
-
-        [HttpGet("prize/achievement-types")]
-        public async Task<IActionResult> GetAchievementTypeDropdown()
-        {
-            var result = await _repo.Dropdown.GetAchievementTypeDropdown();
-            return Ok(result);
-        }
-
-        [HttpGet("prize/levels")]
-        public async Task<IActionResult> GetLevelDropdown()
-        {
-            var result = await _repo.Dropdown.GetLevelDropdown();
-            return Ok(result);
-        }
-
-        [HttpGet("prize/medal-types")]
-        public async Task<IActionResult> GetMedalTypeDropdown()
-        {
-            var result = await _repo.Dropdown.GetMedalTypeDropdown();
-            return Ok(result);
-        }
 
 
         [HttpGet("prize/sessions")]

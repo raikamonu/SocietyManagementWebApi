@@ -25,15 +25,28 @@ namespace Application.Repositories
         {
             try
             {
+                if (input.StartDate.HasValue && input.EndDate.HasValue &&
+                    input.EndDate < input.StartDate)
+                {
+                    return new
+                    {
+                        Success = false,
+                        Message = "End Date cannot be earlier than Start Date"
+                    };
+                }
+
                 var program = new Program
                 {
                     Name = input.Name,
                     LocationId = input.LocationId,
                     SessionId = input.SessionId,
-                    StartDate = input.StartDate,
-                    EndDate = input.EndDate,
+
+                    StartDate = input.StartDate ?? DateTime.Now,
+                    EndDate = input.EndDate ?? DateTime.Now,
+
                     IsActive = input.IsActive ?? 1,
-                    IsDelete = 0
+                    IsDelete = 0,
+
                 };
 
                 await _db.Programs.AddAsync(program);
@@ -58,7 +71,6 @@ namespace Application.Repositories
 
 
 
-
         public async Task<List<ProgramDTO>> GetAllProgram()
         {
             return await _db.Programs
@@ -76,9 +88,6 @@ namespace Application.Repositories
                 })
                 .ToListAsync();
         }
-
-
-
         public async Task<object> GetProgramById(int id)
         {
             try
@@ -95,10 +104,50 @@ namespace Application.Repositories
                     };
                 }
 
+                int? districtId = null;
+                int? stateId = null;
+
+                if (program.LocationId.HasValue)
+                {
+                    var city = await _db.Locations
+                        .FirstOrDefaultAsync(x => x.Id == program.LocationId);
+
+                    if (city != null)
+                    {
+                        districtId = city.ParentId;
+
+                        if (city.ParentId.HasValue)
+                        {
+                            var district = await _db.Locations
+                                .FirstOrDefaultAsync(x => x.Id == city.ParentId);
+
+                            if (district != null)
+                            {
+                                stateId = district.ParentId;
+                            }
+                        }
+                    }
+                }
+
+                var dto = new ProgramDTO
+                {
+                    Id = program.Id,
+                    Name = program.Name,
+                    LocationId = program.LocationId,
+                    SessionId = program.SessionId,
+                    StartDate = program.StartDate,
+                    EndDate = program.EndDate,
+                    IsActive = program.IsActive,
+                    IsDelete = program.IsDelete,
+
+                    DistrictId = districtId,
+                    StateId = stateId
+                };
+
                 return new
                 {
                     Success = true,
-                    Data = program
+                    Data = dto
                 };
             }
             catch (Exception ex)
@@ -113,13 +162,11 @@ namespace Application.Repositories
 
 
 
-
         public async Task<object> UpdateProgram(ProgramDTO input)
         {
             try
             {
-                var program = await _db.Programs
-                    .FirstOrDefaultAsync(x => x.Id == input.Id && x.IsDelete == 0);
+                var program = await _db.Programs.FindAsync(input);
 
                 if (program == null)
                 {
@@ -130,20 +177,30 @@ namespace Application.Repositories
                     };
                 }
 
+                if (input.StartDate.HasValue && input.EndDate.HasValue &&
+                    input.EndDate < input.StartDate)
+                {
+                    return new
+                    {
+                        Success = false,
+                        Message = "End Date cannot be earlier than Start Date"
+                    };
+                }
+
                 program.Name = input.Name;
                 program.LocationId = input.LocationId;
                 program.SessionId = input.SessionId;
-                program.StartDate = input.StartDate;
-                program.EndDate = input.EndDate;
+                program.StartDate = input.StartDate ?? program.StartDate;
+                program.EndDate = input.EndDate ?? program.EndDate;
                 program.IsActive = input.IsActive ?? program.IsActive;
 
-                _db.Programs.Update(program);
+
                 await _db.SaveChangesAsync();
 
                 return new
                 {
                     Success = true,
-                    Message = "Program updated successfully"
+                    Message = "Program Updated Successfully"
                 };
             }
             catch (Exception ex)
@@ -155,8 +212,6 @@ namespace Application.Repositories
                 };
             }
         }
-
-
 
         public async Task<object> DeleteProgram(int id)
         {
@@ -196,14 +251,6 @@ namespace Application.Repositories
             }
         }
 
-
-
-
-
-
-
-
-
-
+       
     }
 }

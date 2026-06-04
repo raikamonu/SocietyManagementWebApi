@@ -12,7 +12,7 @@ namespace Application.Repositories
             _db = db;
         }
 
-        public async Task<List<DropdownDTO>> GetMasterTypeDDL()
+        public async Task<List<DropdownDTO>> GetMasterType()
         {
             var data = await (from mt in _db.MasterTypes
                               where mt.IsDelete == 0 &&
@@ -54,7 +54,7 @@ namespace Application.Repositories
             return data;
         }
 
-        public async Task<List<DropdownDTO>> GetLocationDDL()
+        public async Task<List<DropdownDTO>> GetLocation()
         {
             var data = await (from l in _db.Locations
                               where l.IsActive == 1  
@@ -69,7 +69,7 @@ namespace Application.Repositories
 
 
 
-        public async Task<List<DropdownDTO>> GetSessionDDL(int sessionTypeId)
+        public async Task<List<DropdownDTO>> GetSession(int sessionTypeId)
         {
             return await _db.Sessions
                 .Where(x => x.IsDelete == 0
@@ -84,7 +84,7 @@ namespace Application.Repositories
         }
 
 
-        public async Task<List<DropdownDTO>> GetStateDDL()
+        public async Task<List<DropdownDTO>> GetState()
         {
             return await _db.Locations
                 .Where(x => x.ParentId == null && x.TypeId== 1 && x.IsActive == 1)
@@ -109,7 +109,7 @@ namespace Application.Repositories
         }
 
 
-        public async Task<List<DropdownDTO>> GetProgramDDL()
+        public async Task<List<DropdownDTO>> GetProgram()
         {
             return await _db.Programs
                 .Where(x => x.IsDelete == 0 && x.IsActive == 1)
@@ -124,7 +124,7 @@ namespace Application.Repositories
 
 
 
-        public async Task<List<DropdownDTO>> GetMembershipPlanDDL()
+        public async Task<List<DropdownDTO>> GetMembershipPlan()
         {
             return await _db.MembershipPlans
                 .Where(x => x.IsDelete == 0 && x.IsActive == 1)
@@ -136,55 +136,6 @@ namespace Application.Repositories
                 .ToListAsync();
 
         }
-
-
-
-        public async Task<List<DropdownDTO>> GetAchievementTypeDropdown()
-        {
-            return await _db.MasterTypeDetails
-                .Where(x => x.IsDelete == 0
-                         && x.IsActive == 1
-                         && x.MasterType.Name == "AchievementType")
-                .Select(x => new DropdownDTO
-                {
-                    Id = x.Id,
-                    Name = x.Name
-                })
-                .ToListAsync();
-        }
-
-
-
-        public async Task<List<DropdownDTO>> GetLevelDropdown()
-        {
-            return await _db.MasterTypeDetails
-                .Where(x => x.IsDelete == 0
-                         && x.IsActive == 1
-                         && x.MasterType.Name == "Level")
-                .Select(x => new DropdownDTO
-                {
-                    Id = x.Id,
-                    Name = x.Name
-                })
-                .ToListAsync();
-        }
-
-
-
-        public async Task<List<DropdownDTO>> GetMedalTypeDropdown()
-        {
-            return await _db.MasterTypeDetails
-                .Where(x => x.IsDelete == 0
-                         && x.IsActive == 1
-                         && x.MasterType.Name == "MedalType")
-                .Select(x => new DropdownDTO
-                {
-                    Id = x.Id,
-                    Name = x.Name
-                })
-                .ToListAsync();
-        }
-
 
 
         public async Task<List<DropdownDTO>> GetSessionDropdown()

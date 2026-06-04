@@ -1,4 +1,6 @@
-﻿using Application.DTOs;
+﻿
+
+using Application.DTOs;
 using Data;
 using Microsoft.EntityFrameworkCore;
 using Model;
@@ -136,7 +138,6 @@ namespace Application.Repositories
                 };
             }
         }
-
         public async Task<object> DeleteMembershipPlan(int id)
         {
             var data = await _db.MembershipPlans
@@ -152,6 +153,7 @@ namespace Application.Repositories
             }
 
             data.IsDelete = 1;
+            data.IsActive = 0;
 
             await _db.SaveChangesAsync();
 
@@ -175,7 +177,5 @@ namespace Application.Repositories
 
 
 
-
-
-        }
+    }
 }

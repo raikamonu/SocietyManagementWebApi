@@ -141,7 +141,6 @@ namespace Application.Repositories
                 };
             }
         }
-
         public async Task<object> DeletePrizeMaster(int id)
         {
             var data = await _db.PrizeMasters
@@ -157,6 +156,7 @@ namespace Application.Repositories
             }
 
             data.IsDelete = 1;
+            data.IsActive = 0;   
 
             await _db.SaveChangesAsync();
 
@@ -166,11 +166,6 @@ namespace Application.Repositories
                 Message = "Prize Deleted Successfully"
             };
         }
-
-
-
-
-
 
 
 

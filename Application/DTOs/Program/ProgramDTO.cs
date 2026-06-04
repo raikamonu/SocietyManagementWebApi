@@ -14,6 +14,8 @@ namespace Application.DTOs
         public int? SessionId { get; set; }
         public int? LocationId { get; set; }
 
+        public int? DistrictId { get; set; }
+        public int? StateId { get; set; }
         public int? IsActive { get; set; }
         public int? IsDelete { get; set; }
 
