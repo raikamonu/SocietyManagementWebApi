@@ -16,6 +16,7 @@ public partial class MembershipPlan
     public int IsRenewal { get; set; }
 
     public int IsActive { get; set; }
+    public int IsDelete { get; set; }
 
     public virtual ICollection<Membership> Memberships { get; set; } = new List<Membership>();
 }

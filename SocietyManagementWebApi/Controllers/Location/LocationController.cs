@@ -18,9 +18,6 @@ namespace SocietyManagementWebApi.Controllers.Location
         }
 
 
-        //[HttpPost("create")]
-
-        //public async Task<IActionResult> Create(LocationDTO input)
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] LocationDTO input)
         {

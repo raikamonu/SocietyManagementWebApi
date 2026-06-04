@@ -18,6 +18,7 @@ public partial class PrizeMaster
     public int? Prize { get; set; }
 
     public int IsActive { get; set; }
+    public int IsDelete { get; set; }
 
     public virtual MasterTypeDetail? AchievementType { get; set; }
 

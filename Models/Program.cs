@@ -20,6 +20,7 @@ public partial class Program
     public DateTime? Date { get; set; }
 
     public int IsActive { get; set; }
+    public int IsDelete { get; set; }
 
     public virtual ICollection<Achievement> Achievements { get; set; } = new List<Achievement>();
 

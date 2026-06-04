@@ -12,6 +12,9 @@ namespace Application.Helper
 
         ILocationRepository Location { get; }
         ISessionRepository Session { get; }
-        
+        IProgramRepository Program { get; }
+        IMembershipPlanRepository MembershipPlan { get; }
+        IPrizeMasterRepository PrizeMaster { get; }
+
     }
 }

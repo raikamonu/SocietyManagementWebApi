@@ -21,33 +21,6 @@ namespace Application.Repositories
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(input.Name))
-                {
-                    return new
-                    {
-                        Success = false,
-                        Message = "Session Name is required"
-                    };
-                }
-
-                if (input.StartDate == null || input.EndDate == null)
-                {
-                    return new
-                    {
-                        Success = false,
-                        Message = "Start Date and End Date are required"
-                    };
-                }
-
-                if (input.StartDate >= input.EndDate)
-                {
-                    return new
-                    {
-                        Success = false,
-                        Message = "Start Date must be less than End Date"
-                    };
-                }
-
                 var sessionTypeExists = await _db.MasterTypeDetails
                     .AnyAsync(x => x.Id == input.SessionTypeId);
 
@@ -88,6 +61,7 @@ namespace Application.Repositories
                 };
             }
         }
+
 
         public async Task<List<SessionDTO>> GetAllSession()
         {
@@ -172,12 +146,11 @@ namespace Application.Repositories
                     return new
                     {
                         Success = false,
-                        Message = "Invalid Session Type"////move
+                        Message = "Invalid Session Type"
                     };
                 }
 
                 existingSession.Name = input.Name;
-                //existingSession.SessionTypeId = input.SessionTypeId;
                 existingSession.StartDate = input.StartDate;
                 existingSession.EndDate = input.EndDate;
                 existingSession.IsActive = input.IsActive ?? 1;

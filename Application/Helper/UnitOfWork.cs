@@ -12,7 +12,10 @@ namespace Application.Helper
         public IDropdownRepository Dropdown { get; private set; }
         public ILocationRepository Location { get; private set; }
         public ISessionRepository Session { get; private set; }
-        
+        public IProgramRepository Program { get; private set; }
+        public IMembershipPlanRepository MembershipPlan { get; private set; }
+        public IPrizeMasterRepository PrizeMaster { get; private set; }
+
 
         public UnitOfWork(MissionEducationDbContext db)
         {
@@ -23,6 +26,10 @@ namespace Application.Helper
             Dropdown = new DropdownRepository(db);
             Location = new LocationRepository(db);
             Session = new SessionRepository(db);
+            Program = new ProgramRepository(db);
+            MembershipPlan = new MembershipPlanRepository(db);
+            PrizeMaster = new PrizeMasterRepository(db);
+
         }
     }
 }

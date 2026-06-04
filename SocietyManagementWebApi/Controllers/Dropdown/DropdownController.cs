@@ -46,17 +46,10 @@ namespace SocietyManagementWebApi.Controllers.Dropdown
         }
 
 
-        //[HttpGet("session-list")]
-        //public async Task<IActionResult> GetSessionDDL()
-        //{
-        //    var result = await _repo.Dropdown.GetSessionDDL();
-        //    return Ok(result);
-        //}
-
         [HttpGet("session-list")]
-        public async Task<IActionResult> GetSessionDDL(int sessionId)
+        public async Task<IActionResult> GetSessionDDL(int sessionTypeId)
         {
-            var result = await _repo.Dropdown.GetSessionDDL(sessionId);
+            var result = await _repo.Dropdown.GetSessionDDL(sessionTypeId);
             return Ok(result);
         }
 
@@ -78,5 +71,52 @@ namespace SocietyManagementWebApi.Controllers.Dropdown
 
 
 
+        [HttpGet("program-list")]
+        public async Task<IActionResult> GetProgramDDL()
+        {
+            var result = await _repo.Dropdown.GetProgramDDL();
+            return Ok(result);
+        }
+
+
+
+
+        [HttpGet("GetMembershipPlanDropdown")]
+        public async Task<IActionResult> GetMembershipPlanDropdown()
+        {
+
+            var result = await _repo.Dropdown.GetMembershipPlanDDL();
+            return Ok(result);
+        }
+
+        [HttpGet("prize/achievement-types")]
+        public async Task<IActionResult> GetAchievementTypeDropdown()
+        {
+            var result = await _repo.Dropdown.GetTypeById(1);
+            return Ok(result);
+        }
+
+        [HttpGet("prize/levels")]
+        public async Task<IActionResult> GetLevelDropdown()
+        {
+            var result = await _repo.Dropdown.GetTypeById(2);
+            return Ok(result);
+        }
+
+        [HttpGet("prize/medal-types")]
+        public async Task<IActionResult> GetMedalTypeDropdown()
+        {
+            var result = await _repo.Dropdown.GetTypeById(3);
+            return Ok(result);
+        }
+
+        [HttpGet("prize/sessions")]
+        public async Task<IActionResult> GetPrizeSessionDropdown()
+        {
+            var result = await _repo.Dropdown.GetSessionDDL(0);
+            return Ok(result);
+        }
+
+        
     }
 }

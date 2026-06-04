@@ -1,26 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Application.DTOs
 {
-    public class SessionDTO
+    public class ProgramDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "StartDate is required")]
         public DateTime? StartDate { get; set; }
-
-        [Required(ErrorMessage = "EndDate is required")]
         public DateTime? EndDate { get; set; }
+        public int? SessionId { get; set; }
+        public int? LocationId { get; set; }
 
-        [Required(ErrorMessage = "SessionTypeId is required")]
-        public int? SessionTypeId { get; set; }
-        public string? SessionTypeName { get; set; }
         public int? IsActive { get; set; }
-
         public int? IsDelete { get; set; }
+
     }
 }
