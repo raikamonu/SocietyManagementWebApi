@@ -89,34 +89,39 @@ namespace SocietyManagementWebApi.Controllers.Dropdown
             return Ok(result);
         }
 
+
+
         [HttpGet("prize/achievement-types")]
         public async Task<IActionResult> GetAchievementTypeDropdown()
         {
-            var result = await _repo.Dropdown.GetTypeById(1);
+            var result = await _repo.Dropdown.GetAchievementTypeDropdown();
             return Ok(result);
         }
 
         [HttpGet("prize/levels")]
         public async Task<IActionResult> GetLevelDropdown()
         {
-            var result = await _repo.Dropdown.GetTypeById(2);
+            var result = await _repo.Dropdown.GetLevelDropdown();
             return Ok(result);
         }
 
         [HttpGet("prize/medal-types")]
         public async Task<IActionResult> GetMedalTypeDropdown()
         {
-            var result = await _repo.Dropdown.GetTypeById(3);
+            var result = await _repo.Dropdown.GetMedalTypeDropdown();
             return Ok(result);
         }
+
 
         [HttpGet("prize/sessions")]
         public async Task<IActionResult> GetPrizeSessionDropdown()
         {
-            var result = await _repo.Dropdown.GetSessionDDL(0);
+            var result = await _repo.Dropdown.GetSessionDropdown();
             return Ok(result);
         }
 
-        
+
+
+
     }
 }
