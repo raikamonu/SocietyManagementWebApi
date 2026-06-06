@@ -12,5 +12,19 @@ namespace Application.DTOs
         public string? Name { get; set; }
         public int? ParentId { get; set; }
         public int? IsActive { get; set; }
+
+    }
+
+
+
+
+
+    public class VMasterTypeDTO
+    {
+        public int Id { get; set; }
+        public decimal? Srno { get;  set; }
+        public string? Name { get; set; }
+        public string? ParentName { get; set; }
+        public int? IsActive { get; set; }
     }
 }

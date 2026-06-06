@@ -34,17 +34,19 @@ namespace Application.Repositories
 
 
        
-        public async Task<List<MasterTypeDTO>> GetAllMasterType()
+        public async Task<List<VMasterTypeDTO>> GetAllMasterType()
         {
 
             var masterTypes = await (from mt in _db.MasterTypes
+                                    join pmt in _db.MasterTypes on mt.ParentId equals pmt.Id into Parent
+                                    from pmt in Parent.DefaultIfEmpty()
                                      where mt.IsDelete == 0
-                                     select new MasterTypeDTO()
+                                     select new VMasterTypeDTO()
                                      {
                                          Id = mt.Id,
                                          Srno = mt.Srno,
                                          Name = mt.Name,
-                                         ParentId = mt.ParentId,
+                                         ParentName = pmt.Name,
                                          IsActive = mt.IsActive
                                      }).ToListAsync();
             return masterTypes;
@@ -99,7 +101,7 @@ namespace Application.Repositories
             existingMasterType.Name = input.Name;
             existingMasterType.ParentId = input.ParentId;
             existingMasterType.IsActive = input.IsActive ?? 0;
-            existingMasterType.IsEdit = 1;
+           
 
             await _db.SaveChangesAsync();
 

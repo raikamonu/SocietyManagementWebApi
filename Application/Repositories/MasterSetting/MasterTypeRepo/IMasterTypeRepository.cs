@@ -7,7 +7,7 @@ namespace Application.Repositories
         public Task<object> CreateMasterType(MasterTypeDTO input);
         public Task<object> UpdateMasterType(MasterTypeDTO input);
         public Task<object> GetMasterTypeById(int id);
-        Task<List<MasterTypeDTO>> GetAllMasterType();
+        Task<List<VMasterTypeDTO>> GetAllMasterType();
         public Task<object> DeleteMasterType(int id);
     }
 }
