@@ -52,22 +52,50 @@ namespace Application.Repositories
             }
         }
 
+
         public async Task<List<PrizeMasterDTO>> GetAllPrizeMaster()
         {
-            return await _db.PrizeMasters
-                .Where(x => x.IsDelete == 0)
-                .Select(x => new PrizeMasterDTO
+            var data = await (
+                from p in _db.PrizeMasters
+
+                join ach in _db.MasterTypeDetails
+                    on p.AchievementTypeId equals ach.Id
+
+                join lvl in _db.MasterTypeDetails
+                    on p.Level equals lvl.Id
+
+                join med in _db.MasterTypeDetails
+                    on p.MedalType equals med.Id
+
+                join ses in _db.Sessions
+                    on p.SessionId equals ses.Id
+
+                where p.IsDelete == 0
+
+                select new PrizeMasterDTO
                 {
-                    Id = x.Id,
-                    AchievementTypeId = x.AchievementTypeId,
-                    Level = x.Level,
-                    MedalType = x.MedalType,
-                    SessionId = x.SessionId,
-                    Prize = x.Prize,
-                    IsActive = x.IsActive
-                })
-                .ToListAsync();
+                    Id = p.Id,
+
+                    AchievementTypeId = p.AchievementTypeId,
+                    AchievementTypeName = ach.Name,
+
+                    Level = p.Level,
+                    LevelName = lvl.Name,
+
+                    MedalType = p.MedalType,
+                    MedalTypeName = med.Name,
+
+                    SessionId = p.SessionId,
+                    SessionName = ses.Name,
+
+                    Prize = p.Prize,
+                    IsActive = p.IsActive
+                }
+            ).ToListAsync();
+
+            return data;
         }
+
 
         public async Task<object> GetPrizeMasterById(int id)
         {

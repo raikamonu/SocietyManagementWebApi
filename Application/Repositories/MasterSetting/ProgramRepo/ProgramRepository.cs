@@ -71,23 +71,67 @@ namespace Application.Repositories
 
 
 
+        //public async Task<List<ProgramDTO>> GetAllProgram()
+        //{
+        //    return await _db.Programs
+        //        .Where(x => x.IsDelete == 0)
+        //        .Select(x => new ProgramDTO
+        //        {
+        //            Id = x.Id,
+        //            Name = x.Name,
+        //            StartDate = x.StartDate,
+        //            EndDate = x.EndDate,
+        //            SessionId = x.SessionId,
+        //            LocationId = x.LocationId,
+        //            IsActive = x.IsActive,
+        //            IsDelete = x.IsDelete
+        //        })
+        //        .ToListAsync();
+        //}
         public async Task<List<ProgramDTO>> GetAllProgram()
         {
-            return await _db.Programs
-                .Where(x => x.IsDelete == 0)
-                .Select(x => new ProgramDTO
+            var data = await (
+                from p in _db.Programs
+
+                join city in _db.Locations
+                    on p.LocationId equals city.Id into cityJoin
+                from city in cityJoin.DefaultIfEmpty()
+
+                join district in _db.Locations
+                    on city.ParentId equals district.Id into districtJoin
+                from district in districtJoin.DefaultIfEmpty()
+
+                join state in _db.Locations
+                    on district.ParentId equals state.Id into stateJoin
+                from state in stateJoin.DefaultIfEmpty()
+
+                where p.IsDelete == 0
+
+                select new ProgramDTO
                 {
-                    Id = x.Id,
-                    Name = x.Name,
-                    StartDate = x.StartDate,
-                    EndDate = x.EndDate,
-                    SessionId = x.SessionId,
-                    LocationId = x.LocationId,
-                    IsActive = x.IsActive,
-                    IsDelete = x.IsDelete
-                })
-                .ToListAsync();
+                    Id = p.Id,
+                    Name = p.Name,
+                    StartDate = p.StartDate,
+                    EndDate = p.EndDate,
+                    SessionId = p.SessionId,
+                    LocationId = p.LocationId,
+                    IsActive = p.IsActive,
+                    IsDelete = p.IsDelete,
+
+                    CityName = city != null ? city.Name : null,
+                    DistrictName = district != null ? district.Name : null,
+                    StateName = state != null ? state.Name : null,
+
+                    DistrictId = district != null ? district.Id : null,
+                    StateId = state != null ? state.Id : null
+                }
+            ).ToListAsync();
+
+            return data;
         }
+
+
+
         public async Task<object> GetProgramById(int id)
         {
             try

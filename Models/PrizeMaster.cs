@@ -6,7 +6,6 @@ namespace Model;
 public partial class PrizeMaster
 {
     public int Id { get; set; }
-
     public int? AchievementTypeId { get; set; }
 
     public int? Level { get; set; }

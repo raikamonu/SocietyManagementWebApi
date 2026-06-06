@@ -13,9 +13,12 @@ namespace Application.DTOs
         public DateTime? EndDate { get; set; }
         public int? SessionId { get; set; }
         public int? LocationId { get; set; }
-
-        public int? DistrictId { get; set; }
         public int? StateId { get; set; }
+        public int? DistrictId { get; set; }
+
+        public string? StateName { get; set; }
+        public string? DistrictName { get; set; }
+        public string? CityName { get; set; }
         public int? IsActive { get; set; }
         public int? IsDelete { get; set; }
 

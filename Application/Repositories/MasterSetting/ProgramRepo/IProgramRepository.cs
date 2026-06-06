@@ -18,15 +18,6 @@ namespace Application.Repositories
         public Task<object> DeleteProgram(int id);
 
 
-        //Task<object> CreateProgram(ProgramDTO input);
-
-        //Task<object> UpdateProgram(ProgramDTO input);
-
-        //Task<object> GetProgramById(int id);
-
-        //Task<object> GetAllProgram();
-
-        //Task<object> DeleteProgram(int id);
 
     }
 }
