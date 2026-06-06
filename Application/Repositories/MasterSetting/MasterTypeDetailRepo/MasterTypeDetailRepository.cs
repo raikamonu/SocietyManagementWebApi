@@ -52,6 +52,10 @@ namespace Application.Repositories
         public async Task<List<MasterTypeDetailDTO>> GetAllMasterTypeDetail()
         {
             var masterTypeDetails = await (from mtd in _db.MasterTypeDetails
+                                         join mt in _db.MasterTypes on mtd.MasterTypeId equals mt.Id 
+                                         join parent in _db.MasterTypeDetails on mtd.ParentId equals parent.Id into parentGroup
+                                            from parent in parentGroup.DefaultIfEmpty()
+
                                            where mtd.IsDelete == 0
                                            select new MasterTypeDetailDTO()
                                            {
@@ -61,6 +65,8 @@ namespace Application.Repositories
                                                Name = mtd.Name,
                                                ParentId = mtd.ParentId,
                                                MasterTypeId = mtd.MasterTypeId,
+                                               ParentName = parent != null ? parent.Name : null,
+                                               MasterTypeName = mt.Name,
                                                IsActive = mtd.IsActive
                                            }).ToListAsync();
             return masterTypeDetails;

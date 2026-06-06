@@ -12,6 +12,8 @@ namespace Application.Repositories
             _db = db;
         }
 
+
+
         public async Task<List<DropdownDTO>> GetMasterType()
         {
             var data = await (from mt in _db.MasterTypes
@@ -57,7 +59,7 @@ namespace Application.Repositories
         public async Task<List<DropdownDTO>> GetLocation()
         {
             var data = await (from l in _db.Locations
-                              where l.IsActive == 1  
+                              where l.IsActive == 1
                               select new DropdownDTO()
                               {
                                   Id = l.Id,
@@ -84,22 +86,12 @@ namespace Application.Repositories
         }
 
 
-        public async Task<List<DropdownDTO>> GetState()
-        {
-            return await _db.Locations
-                .Where(x => x.ParentId == null && x.TypeId== 1 && x.IsActive == 1)
-                .Select(x => new DropdownDTO
-                {
-                    Id = x.Id,
-                    Name = x.Name
-                })
-                .ToListAsync();
-        }
+     
 
-        public async Task<List<DropdownDTO>> GetCommonLocation(int typeId,int parentId)
+        public async Task<List<DropdownDTO>> GetCommonLocation(int typeId, int parentId)
         {
             return await _db.Locations
-                .Where(x => x.ParentId == parentId && x.TypeId==typeId && x.IsActive == 1)
+                .Where(x => x.ParentId == parentId && x.TypeId == typeId && x.IsActive == 1)
                 .Select(x => new DropdownDTO
                 {
                     Id = x.Id,
@@ -149,6 +141,61 @@ namespace Application.Repositories
                 })
                 .ToListAsync();
         }
+
+
+
+
+
+
+
+
+
+
+
+        public async Task<List<DropdownDTO>> GetState()
+        {
+            return await _db.Locations
+                .Where(x => x.ParentId == null
+                         && x.TypeId == 1
+                         && x.IsActive == 1)
+                .Select(x => new DropdownDTO
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                })
+                .ToListAsync();
+        }
+
+
+
+
+        public async Task<List<DropdownDTO>> GetDistrict(int stateId)
+        {
+            var data = await _db.Locations
+                .Where(x => x.ParentId == stateId)
+                .Select(x => new DropdownDTO
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                })
+                .ToListAsync();
+
+            return data;
+        }
+        public async Task<List<DropdownDTO>> GetCity(int districtId)
+        {
+            var data = await _db.Locations
+                .Where(x => x.ParentId == districtId)
+                .Select(x => new DropdownDTO
+                {
+                    Id = x.Id,
+                    Name = x.Name
+                })
+                .ToListAsync();
+
+            return data;
+        }
+
 
 
     }

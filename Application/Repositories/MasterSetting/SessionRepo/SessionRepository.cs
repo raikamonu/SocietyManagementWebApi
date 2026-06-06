@@ -21,17 +21,9 @@ namespace Application.Repositories
         {
             try
             {
-                var sessionTypeExists = await _db.MasterTypeDetails
-                    .AnyAsync(x => x.Id == input.SessionTypeId);
+                
 
-                if (!sessionTypeExists)
-                {
-                    return new
-                    {
-                        Success = false,
-                        Message = "Invalid Session Type"
-                    };
-                }
+             
 
                 Session session = new Session
                 {
@@ -65,20 +57,24 @@ namespace Application.Repositories
 
         public async Task<List<SessionDTO>> GetAllSession()
         {
-            var sessions = await _db.Sessions
-                .Where(x => x.IsDelete == 0)
-                .Select(s => new SessionDTO
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    SessionTypeId = s.SessionTypeId,
-                    StartDate = s.StartDate,
-                    EndDate = s.EndDate,
-                    IsActive = s.IsActive
-                })
-                .ToListAsync();
+            var data = await(from s in _db.Sessions
+                        join st in _db.MasterTypeDetails on s.SessionTypeId equals st.Id into sessionTypeGroup
+                        from st in sessionTypeGroup.DefaultIfEmpty()
+                        where s.IsDelete == 0
+                        select new SessionDTO
+                        {
+                            Id = s.Id,
+                            Name = s.Name?? "",
+                            SessionTypeId = s.SessionTypeId,
+                            SessionTypeName = st != null ? st.Name : null,
+                            StartDate = s.StartDate,
+                            EndDate = s.EndDate,
+                            IsActive = s.IsActive
+                        }).ToListAsync();
 
-            return sessions;
+
+
+            return data;
         }
 
 

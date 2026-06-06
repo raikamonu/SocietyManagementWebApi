@@ -1,4 +1,5 @@
-﻿using Application.Helper;
+﻿using Application.DTOs;
+using Application.Helper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SocietyManagementWebApi.Controllers.Dropdown
@@ -13,12 +14,25 @@ namespace SocietyManagementWebApi.Controllers.Dropdown
             _repo = repo;
         }
 
+
+
         [HttpGet("master-type")]
         public async Task<IActionResult> GetMasterType()
         {
             var result = await _repo.Dropdown.GetMasterType();
             return Ok(result);
         }
+
+
+
+        [HttpGet("master-type-detail")]
+        public async Task<IActionResult> GetMasterTypeDetail(int masterTypeId)
+        {
+            var result = await _repo.Dropdown.GetTypeById(masterTypeId);
+            return Ok(result);
+        }
+     
+
 
 
         [HttpGet("type-detail-list")]
@@ -54,12 +68,6 @@ namespace SocietyManagementWebApi.Controllers.Dropdown
         }
 
 
-        [HttpGet("state-list")]
-        public async Task<IActionResult> GetState()
-        {
-            var result = await _repo.Dropdown.GetState();
-            return Ok(result);
-        }
 
         [HttpGet("common-location-list")]
         public async Task<IActionResult> GetCommonLocation(int typeId, int parentId)
@@ -99,6 +107,34 @@ namespace SocietyManagementWebApi.Controllers.Dropdown
             return Ok(result);
         }
 
+
+
+
+
+
+        [HttpGet("state-list")]
+        public async Task<IActionResult> GetState()
+        {
+            var result = await _repo.Dropdown.GetState();
+            return Ok(result);
+        }
+
+
+
+
+        [HttpGet("district-list")]
+        public async Task<IActionResult> GetDistrict(int stateId)
+        {
+            var result = await _repo.Dropdown.GetDistrict(stateId);
+            return Ok(result);
+        }
+
+        [HttpGet("city-list")]
+        public async Task<IActionResult> GetCity(int districtId)
+        {
+            var result = await _repo.Dropdown.GetCity(districtId);
+            return Ok(result);
+        }
 
 
 

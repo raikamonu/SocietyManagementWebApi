@@ -16,6 +16,8 @@ namespace Application.DTOs
         public int? ParentId { get; set; }
 
         public int? MasterTypeId { get; set; }
+        public string? MasterTypeName { get; set; }
+        public string? ParentName { get; set; }
 
         public int? IsActive { get; set; }
 

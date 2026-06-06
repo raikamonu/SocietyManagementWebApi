@@ -43,10 +43,6 @@ namespace Application.Repositories
                     InnerException = ex.InnerException?.Message
                 };
             }
-            //catch (Exception ex)
-            //{
-            //    return new { Success = false, Message = $"Error creating location: {ex.Message}" };
-            //}
         }
 
         
