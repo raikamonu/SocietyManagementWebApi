@@ -14,10 +14,6 @@ namespace Application.Repositories
         Task<List<DropdownDTO>> GetMembershipPlan();
         Task<List<DropdownDTO>> GetSessionDropdown();
 
-        Task<List<DropdownDTO>> GetState();
-        Task<List<DropdownDTO>> GetDistrict(int stateId);
-        Task<List<DropdownDTO>> GetCity(int districtId);
-
 
     }
 }

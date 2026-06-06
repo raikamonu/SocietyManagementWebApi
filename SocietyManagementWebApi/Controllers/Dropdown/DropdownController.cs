@@ -31,7 +31,7 @@ namespace SocietyManagementWebApi.Controllers.Dropdown
             var result = await _repo.Dropdown.GetTypeById(masterTypeId);
             return Ok(result);
         }
-     
+
 
 
 
@@ -111,30 +111,6 @@ namespace SocietyManagementWebApi.Controllers.Dropdown
 
 
 
-
-        [HttpGet("state-list")]
-        public async Task<IActionResult> GetState()
-        {
-            var result = await _repo.Dropdown.GetState();
-            return Ok(result);
-        }
-
-
-
-
-        [HttpGet("district-list")]
-        public async Task<IActionResult> GetDistrict(int stateId)
-        {
-            var result = await _repo.Dropdown.GetDistrict(stateId);
-            return Ok(result);
-        }
-
-        [HttpGet("city-list")]
-        public async Task<IActionResult> GetCity(int districtId)
-        {
-            var result = await _repo.Dropdown.GetCity(districtId);
-            return Ok(result);
-        }
 
 
 

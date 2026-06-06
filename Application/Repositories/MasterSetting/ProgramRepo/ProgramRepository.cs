@@ -69,25 +69,6 @@ namespace Application.Repositories
         }
 
 
-
-
-        //public async Task<List<ProgramDTO>> GetAllProgram()
-        //{
-        //    return await _db.Programs
-        //        .Where(x => x.IsDelete == 0)
-        //        .Select(x => new ProgramDTO
-        //        {
-        //            Id = x.Id,
-        //            Name = x.Name,
-        //            StartDate = x.StartDate,
-        //            EndDate = x.EndDate,
-        //            SessionId = x.SessionId,
-        //            LocationId = x.LocationId,
-        //            IsActive = x.IsActive,
-        //            IsDelete = x.IsDelete
-        //        })
-        //        .ToListAsync();
-        //}
         public async Task<List<ProgramDTO>> GetAllProgram()
         {
             var data = await (
