@@ -8,6 +8,7 @@ namespace Application.Repositories
         public Task<object> UpdateMasterType(MasterTypeDTO input);
         public Task<object> GetMasterTypeById(int id);
         Task<List<VMasterTypeDTO>> GetAllMasterType();
-        public Task<object> DeleteMasterType(int id);
+        Task<object> DeleteMasterType(int id, bool permanentDelete = false);
+        //public Task<object> DeleteMasterType(int id);
     }
 }

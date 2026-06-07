@@ -14,8 +14,9 @@ namespace Application.Repositories
         public Task<object> GetProgramById(int id);
 
         Task<List<ProgramDTO>> GetAllProgram();
+        Task<object> DeleteProgram(int id, bool permanentDelete = false);
 
-        public Task<object> DeleteProgram(int id);
+        //public Task<object> DeleteProgram(int id);
 
 
 

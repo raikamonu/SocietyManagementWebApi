@@ -12,6 +12,7 @@ namespace Application.Repositories
         public Task<object> UpdateSession(SessionDTO input);
         public Task<object> GetSessionById(int id);
         Task<List<SessionDTO>> GetAllSession();
-        public Task<object> DeleteSession(int id);
+            Task<object> DeleteSession(int id, bool permanentDelete = false);
+        //public Task<object> DeleteSession(int id);
     }
 }

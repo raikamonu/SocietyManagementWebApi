@@ -16,6 +16,7 @@ public partial class Location
     public int? TypeId { get; set; }
 
     public int IsActive { get; set; }
+    public int IsDelete{ get; set; }
 
     public virtual ICollection<AddressProfile> AddressProfiles { get; set; } = new List<AddressProfile>();
 

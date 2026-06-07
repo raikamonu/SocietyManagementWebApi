@@ -135,7 +135,9 @@ namespace Application.Repositories
         }
 
 
-        public async Task<object> DeleteMasterTypeDetail(int id)
+
+      
+        public async Task<object> DeleteMasterTypeDetail(int id, bool permanentDelete = false)
         {
             var data = await _db.MasterTypeDetails.FirstOrDefaultAsync(x => x.Id == id);
             if (data == null)
@@ -146,16 +148,47 @@ namespace Application.Repositories
                     Message = "MasterTypeDetail Not Found"
                 };
             }
-            data.IsDelete = 1;
-            data.IsActive = 0;
-            _db.MasterTypeDetails.Update(data);
+            if (permanentDelete)
+            {
+                _db.MasterTypeDetails.Remove(data);
+            }
+            else
+            {
+                data.IsDelete = 1;
+                data.IsActive = 0;
+                _db.MasterTypeDetails.Update(data);
+            }
             await _db.SaveChangesAsync();
             return new
             {
                 Success = true,
                 Message = "MasterTypeDetail Deleted Successfully"
             };
+
         }
+
+
+        //public async Task<object> DeleteMasterTypeDetail(int id)
+        //{
+        //    var data = await _db.MasterTypeDetails.FirstOrDefaultAsync(x => x.Id == id);
+        //    if (data == null)
+        //    {
+        //        return new
+        //        {
+        //            Success = false,
+        //            Message = "MasterTypeDetail Not Found"
+        //        };
+        //    }
+        //    data.IsDelete = 1;
+        //    data.IsActive = 0;
+        //    _db.MasterTypeDetails.Update(data);
+        //    await _db.SaveChangesAsync();
+        //    return new
+        //    {
+        //        Success = true,
+        //        Message = "MasterTypeDetail Deleted Successfully"
+        //    };
+        //}
 
 
 

@@ -170,31 +170,68 @@ namespace Application.Repositories
         }
 
 
-        public async Task<object> DeleteSession(int id)
-        {
-            var data = await _db.Sessions.FirstOrDefaultAsync(x => x.Id == id);
 
-            if (data == null)
+            public async Task<object> DeleteSession(int id, bool permanentDelete = false)
             {
+                var data = await _db.Sessions.FirstOrDefaultAsync(x => x.Id == id);
+    
+                if (data == null)
+                {
+                    return new
+                    {
+                        Success = false,
+                        Message = "Session Not Found"
+                    };
+                }
+    
+                if (permanentDelete)
+                {
+                    _db.Sessions.Remove(data);
+                }
+                else
+                {
+                    data.IsDelete = 1;
+                }
+    
+                await _db.SaveChangesAsync();
+    
                 return new
                 {
-                    Success = false,
-                    Message = "Session Not Found"
+                    Success = true,
+                    Message = "Session Deleted Successfully"
                 };
-            }
-
-            data.IsDelete = 1;
-
-            await _db.SaveChangesAsync();
-
-            return new
-            {
-                Success = true,
-                Message = "Session Deleted Successfully"
-            };
         }
 
-        
+        //public async Task<object> DeleteSession(int id)
+        //{
+        //    var data = await _db.Sessions.FirstOrDefaultAsync(x => x.Id == id);
+
+        //    if (data == null)
+        //    {
+        //        return new
+        //        {
+        //            Success = false,
+        //            Message = "Session Not Found"
+        //        };
+        //    }
+
+        //    data.IsDelete = 1;
+
+        //    await _db.SaveChangesAsync();
+
+        //    return new
+        //    {
+        //        Success = true,
+        //        Message = "Session Deleted Successfully"
+        //    };
+        //}
+
+
+
+
+
+
+
     }
 }
 

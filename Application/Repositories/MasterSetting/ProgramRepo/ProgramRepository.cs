@@ -238,12 +238,19 @@ namespace Application.Repositories
             }
         }
 
-        public async Task<object> DeleteProgram(int id)
+
+
+
+
+
+
+
+        public async Task<object> DeleteProgram(int id, bool permanentDelete = false)
         {
             try
             {
                 var program = await _db.Programs
-                    .FirstOrDefaultAsync(x => x.Id == id && x.IsDelete == 0);
+                    .FirstOrDefaultAsync(x => x.Id == id);
 
                 if (program == null)
                 {
@@ -254,16 +261,24 @@ namespace Application.Repositories
                     };
                 }
 
-                program.IsDelete = 1;
-                program.IsActive = 0;
+                if (permanentDelete)
+                {
+                    _db.Programs.Remove(program);
+                }
+                else
+                {
+                    program.IsDelete = 1;
+                    program.IsActive = 0;
+                }
 
-                _db.Programs.Update(program);
                 await _db.SaveChangesAsync();
 
                 return new
                 {
                     Success = true,
-                    Message = "Program deleted successfully"
+                    Message = permanentDelete
+                        ? "Program permanently deleted successfully"
+                        : "Program soft deleted successfully"
                 };
             }
             catch (Exception ex)
@@ -271,11 +286,48 @@ namespace Application.Repositories
                 return new
                 {
                     Success = false,
-                    Message = ex.Message
+                    Message = ex.InnerException?.Message ?? ex.Message
                 };
             }
         }
+         //public async Task<object> DeleteProgram(int id)
+        //{
+        //    try
+        //    {
+        //        var program = await _db.Programs
+        //            .FirstOrDefaultAsync(x => x.Id == id && x.IsDelete == 0);
 
-       
+        //        if (program == null)
+        //        {
+        //            return new
+        //            {
+        //                Success = false,
+        //                Message = "Program not found"
+        //            };
+        //        }
+
+        //        program.IsDelete = 1;
+        //        program.IsActive = 0;
+
+        //        _db.Programs.Update(program);
+        //        await _db.SaveChangesAsync();
+
+        //        return new
+        //        {
+        //            Success = true,
+        //            Message = "Program deleted successfully"
+        //        };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new
+        //        {
+        //            Success = false,
+        //            Message = ex.Message
+        //        };
+        //    }
+        //}
+
+
     }
 }

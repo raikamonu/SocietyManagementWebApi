@@ -123,30 +123,72 @@ namespace Application.Repositories
 
 
 
+        //public async Task<object> DeleteLocation(int id)
+        //{
+        //    try
+        //    {
+        //        var location = await _db.Locations.FindAsync(id);
+        //        if (location == null)
+        //        {
+        //            return new { Success = false, Message = "Location not found" };
+        //        }
+        //        _db.Locations.Remove(location);
+        //        await _db.SaveChangesAsync();
+        //        return new { Success = true, Message = "Location deleted successfully" };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new { Success = false, Message = $"Error deleting location: {ex.Message}" };
+        //    }
+        //}
 
-        public async Task<object> DeleteLocation(int id)
+
+
+
+        public async Task<object> DeleteLocation(int id, bool permanentDelete = false)
         {
             try
             {
-                var location = await _db.Locations.FindAsync(id);
+                var location = await _db.Locations
+                    .FirstOrDefaultAsync(x => x.Id == id);
+
                 if (location == null)
                 {
-                    return new { Success = false, Message = "Location not found" };
+                    return new
+                    {
+                        Success = false,
+                        Message = "Location not found"
+                    };
                 }
-                _db.Locations.Remove(location);
+
+                if (permanentDelete)
+                {
+                    _db.Locations.Remove(location); // Hard Delete
+                }
+                else
+                {
+                    location.IsDelete = 1; // Soft Delete
+                }
+
                 await _db.SaveChangesAsync();
-                return new { Success = true, Message = "Location deleted successfully" };
+
+                return new
+                {
+                    Success = true,
+                    Message = permanentDelete
+                        ? "Location Permanently Deleted Successfully"
+                        : "Location Soft Deleted Successfully"
+                };
             }
             catch (Exception ex)
             {
-                return new { Success = false, Message = $"Error deleting location: {ex.Message}" };
+                return new
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
             }
         }
-
-
-
-
-
 
 
         public async Task<List<LocationDTO>> GetParentLocations()

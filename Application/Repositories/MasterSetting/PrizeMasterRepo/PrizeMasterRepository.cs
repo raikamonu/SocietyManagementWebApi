@@ -169,11 +169,13 @@ namespace Application.Repositories
                 };
             }
         }
-        public async Task<object> DeletePrizeMaster(int id)
+
+
+
+        public async Task<object> DeletePrizeMaster(int id, bool permanentDelete = false)
         {
             var data = await _db.PrizeMasters
                 .FirstOrDefaultAsync(x => x.Id == id);
-
             if (data == null)
             {
                 return new
@@ -182,18 +184,48 @@ namespace Application.Repositories
                     Message = "Record Not Found"
                 };
             }
-
-            data.IsDelete = 1;
-            data.IsActive = 0;   
-
+            if (permanentDelete)
+            {
+                _db.PrizeMasters.Remove(data);
+            }
+            else
+            {
+                data.IsDelete = 1;
+                data.IsActive = 0;
+            }
             await _db.SaveChangesAsync();
-
             return new
             {
                 Success = true,
                 Message = "Prize Deleted Successfully"
             };
         }
+
+        //public async Task<object> DeletePrizeMaster(int id)
+        //{
+        //    var data = await _db.PrizeMasters
+        //        .FirstOrDefaultAsync(x => x.Id == id);
+
+        //    if (data == null)
+        //    {
+        //        return new
+        //        {
+        //            Success = false,
+        //            Message = "Record Not Found"
+        //        };
+        //    }
+
+        //    data.IsDelete = 1;
+        //    data.IsActive = 0;   
+
+        //    await _db.SaveChangesAsync();
+
+        //    return new
+        //    {
+        //        Success = true,
+        //        Message = "Prize Deleted Successfully"
+        //    };
+        //}
 
 
 

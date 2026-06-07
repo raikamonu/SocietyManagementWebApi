@@ -14,8 +14,9 @@ namespace Application.Repositories
         Task<object> GetLocationById(int id);
 
         Task<object> UpdateLocation(LocationDTO input);
+        Task<object> DeleteLocation(int id, bool permanentDelete = false);
 
-        Task<object> DeleteLocation(int id);
+        //Task<object> DeleteLocation(int id);
 
         Task<List<LocationDTO>> GetParentLocations();
 

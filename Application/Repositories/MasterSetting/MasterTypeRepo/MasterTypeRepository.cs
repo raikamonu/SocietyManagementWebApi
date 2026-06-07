@@ -112,30 +112,71 @@ namespace Application.Repositories
             };
         }
 
-        public async Task<object> DeleteMasterType(int id)
-        {
-            var data = await _db.MasterTypes.FirstOrDefaultAsync(x => x.Id == id);
 
-            if (data == null)
+
+
+
+
+
+
+            public async Task<object> DeleteMasterType(int id, bool permanentDelete = false)
             {
+                var data = await _db.MasterTypes.FirstOrDefaultAsync(x => x.Id == id);
+    
+                if (data == null)
+                {
+                    return new
+                    {
+                        Success = false,
+                        Message = "MasterType Not Found"
+                    };
+                }
+    
+                if (permanentDelete)
+                {
+                    _db.MasterTypes.Remove(data);
+                }
+                else
+                {
+                    //soft delete 
+                    data.IsDelete = 1;
+                    data.IsActive = 0;
+                    _db.MasterTypes.Update(data);
+                }
+                
+                await _db.SaveChangesAsync();
+    
                 return new
                 {
-                    Success = false,
-                    Message = "MasterType Not Found"
+                    Success = true,
+                    Message = permanentDelete ? "MasterType Permanently Deleted Successfully" : "MasterType Deleted Successfully"
                 };
-            }
-            //soft delete 
-            data.IsDelete = 1;
-            data.IsActive = 0;
-            _db.MasterTypes.Update(data);
-            await _db.SaveChangesAsync();
-
-            return new
-            {
-                Success = true,
-                Message = "MasterType Deleted Successfully"
-            };
         }
+
+        //public async Task<object> DeleteMasterType(int id)
+        //{
+        //    var data = await _db.MasterTypes.FirstOrDefaultAsync(x => x.Id == id);
+
+        //    if (data == null)
+        //    {
+        //        return new
+        //        {
+        //            Success = false,
+        //            Message = "MasterType Not Found"
+        //        };
+        //    }
+        //    //soft delete 
+        //    data.IsDelete = 1;
+        //    data.IsActive = 0;
+        //    _db.MasterTypes.Update(data);
+        //    await _db.SaveChangesAsync();
+
+        //    return new
+        //    {
+        //        Success = true,
+        //        Message = "MasterType Deleted Successfully"
+        //    };
+        //}
 
 
 

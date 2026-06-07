@@ -11,7 +11,8 @@ namespace Application.Repositories
         Task<object> UpdatePrizeMaster(PrizeMasterDTO dto);
         Task<object> GetPrizeMasterById(int id);
         Task<List<PrizeMasterDTO>> GetAllPrizeMaster();
-        Task<object> DeletePrizeMaster(int id);
+        Task<object> DeletePrizeMaster(int id, bool permanentDelete = false);
+        //Task<object> DeletePrizeMaster(int id);
 
 
     }
