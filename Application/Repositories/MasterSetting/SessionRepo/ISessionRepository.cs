@@ -8,11 +8,10 @@ namespace Application.Repositories
     public interface ISessionRepository
     {
        
-            public Task<object> CreateSession(SessionDTO input);
-        public Task<object> UpdateSession(SessionDTO input);
-        public Task<object> GetSessionById(int id);
+         Task<object> CreateSession(SessionDTO input);
+        Task<object> UpdateSession(SessionDTO input);
+        Task<object> GetSessionById(int id);
         Task<List<SessionDTO>> GetAllSession();
-            Task<object> DeleteSession(int id, bool permanentDelete = false);
-        //public Task<object> DeleteSession(int id);
+        Task<object> DeleteSession(int id, bool permanentDelete = false);
     }
 }

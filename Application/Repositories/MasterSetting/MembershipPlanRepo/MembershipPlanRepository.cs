@@ -166,8 +166,38 @@ namespace Application.Repositories
 
 
 
+        public async Task<object> DeleteMembershipPlan(int id, bool permanentDelete = false)
+        {
+            var plan = await _db.MembershipPlans.FindAsync(id);
 
+            if (plan == null)
+            {
+                return new
+                {
+                    Success = false,
+                    Message = "Plan not found"
+                };
+            }
 
+            if (permanentDelete)
+            {
+                _db.MembershipPlans.Remove(plan); // Hard Delete
+            }
+            else
+            {
+                plan.IsDelete = 1; // Soft Delete
+            }
+
+            await _db.SaveChangesAsync();
+
+            return new
+            {
+                Success = true,
+                Message = permanentDelete
+                    ? "Plan permanently deleted"
+                    : "Plan soft deleted"
+            };
+        }
 
 
 

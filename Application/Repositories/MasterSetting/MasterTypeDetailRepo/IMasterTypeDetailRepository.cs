@@ -13,7 +13,5 @@ namespace Application.Repositories
         Task<object> UpdateMasterTypeDetail(MasterTypeDetailDTO input);
         Task<object> DeleteMasterTypeDetail(int id, bool permanentDelete = false);
 
-        //Task<object> DeleteMasterTypeDetail(int id);
-
     }
 }

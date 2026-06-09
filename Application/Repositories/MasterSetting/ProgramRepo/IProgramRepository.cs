@@ -7,16 +7,14 @@ namespace Application.Repositories
 {
     public interface IProgramRepository
     {
-        public Task<object> CreateProgram(ProgramDTO input);
+         Task<object> CreateProgram(ProgramDTO input);
 
-        public Task<object> UpdateProgram(ProgramDTO input);
+         Task<object> UpdateProgram(ProgramDTO input);
 
-        public Task<object> GetProgramById(int id);
+         Task<object> GetProgramById(int id);
 
         Task<List<ProgramDTO>> GetAllProgram();
         Task<object> DeleteProgram(int id, bool permanentDelete = false);
-
-        //public Task<object> DeleteProgram(int id);
 
 
 

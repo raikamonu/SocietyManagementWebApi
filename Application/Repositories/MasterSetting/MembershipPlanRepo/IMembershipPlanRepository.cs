@@ -13,7 +13,7 @@ namespace Application.Repositories
         Task<object> UpdateMembershipPlan(MembershipPlanDTO input);
         Task<object> GetMembershipPlanById(int id);
         Task<List<MembershipPlanDTO>> GetAllMembershipPlan();
-        Task<object> DeleteMembershipPlan(int id);
+        Task<object> DeleteMembershipPlan(int id, bool permanentDelete = false);
 
 
 

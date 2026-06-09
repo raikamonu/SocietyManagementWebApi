@@ -153,33 +153,7 @@ namespace Application.Repositories
                 };
         }
 
-        //public async Task<object> DeleteMasterType(int id)
-        //{
-        //    var data = await _db.MasterTypes.FirstOrDefaultAsync(x => x.Id == id);
-
-        //    if (data == null)
-        //    {
-        //        return new
-        //        {
-        //            Success = false,
-        //            Message = "MasterType Not Found"
-        //        };
-        //    }
-        //    //soft delete 
-        //    data.IsDelete = 1;
-        //    data.IsActive = 0;
-        //    _db.MasterTypes.Update(data);
-        //    await _db.SaveChangesAsync();
-
-        //    return new
-        //    {
-        //        Success = true,
-        //        Message = "MasterType Deleted Successfully"
-        //    };
-        //}
-
-
-
+       
 
 
 

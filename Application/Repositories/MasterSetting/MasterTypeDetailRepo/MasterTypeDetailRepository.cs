@@ -168,28 +168,7 @@ namespace Application.Repositories
         }
 
 
-        //public async Task<object> DeleteMasterTypeDetail(int id)
-        //{
-        //    var data = await _db.MasterTypeDetails.FirstOrDefaultAsync(x => x.Id == id);
-        //    if (data == null)
-        //    {
-        //        return new
-        //        {
-        //            Success = false,
-        //            Message = "MasterTypeDetail Not Found"
-        //        };
-        //    }
-        //    data.IsDelete = 1;
-        //    data.IsActive = 0;
-        //    _db.MasterTypeDetails.Update(data);
-        //    await _db.SaveChangesAsync();
-        //    return new
-        //    {
-        //        Success = true,
-        //        Message = "MasterTypeDetail Deleted Successfully"
-        //    };
-        //}
-
+      
 
 
 
