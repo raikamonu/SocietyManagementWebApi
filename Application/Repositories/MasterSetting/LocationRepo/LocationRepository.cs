@@ -49,6 +49,7 @@ namespace Application.Repositories
         public async Task<List<LocationDTO>> GetAllLocation()
         {
             var locations = await _db.Locations
+                 .Where(x => x.IsDelete == 0)
                 .Include(l => l.Parent)
                 .Include(l => l.Type)
                 .Select(l => new LocationDTO

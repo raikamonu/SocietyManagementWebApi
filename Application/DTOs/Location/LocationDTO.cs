@@ -14,6 +14,7 @@ namespace Application.DTOs
         public int? TypeId { get; set; }
         public string? TypeName { get; set; }
         public int IsActive { get; set; }
+        public int IsDelete { get; set; }
 
 
 

@@ -78,6 +78,10 @@ namespace Application.Repositories
                     on p.LocationId equals city.Id into cityJoin
                 from city in cityJoin.DefaultIfEmpty()
 
+                join block in _db.Locations
+                    on city.ParentId equals block.Id into blockJoin
+                    from block in blockJoin.DefaultIfEmpty()
+
                 join district in _db.Locations
                     on city.ParentId equals district.Id into districtJoin
                 from district in districtJoin.DefaultIfEmpty()
@@ -85,6 +89,10 @@ namespace Application.Repositories
                 join state in _db.Locations
                     on district.ParentId equals state.Id into stateJoin
                 from state in stateJoin.DefaultIfEmpty()
+
+                join country in _db.Locations
+                    on city.ParentId equals country.Id into countryJoin
+                from country in countryJoin.DefaultIfEmpty()
 
                 where p.IsDelete == 0
 
@@ -100,11 +108,16 @@ namespace Application.Repositories
                     IsDelete = p.IsDelete,
 
                     CityName = city != null ? city.Name : null,
+                    BlockName = block != null ? block.Name : null,
                     DistrictName = district != null ? district.Name : null,
                     StateName = state != null ? state.Name : null,
+                    CountryName = country != null ? country.Name : null,
 
+
+                    BlockId = block != null ? block.Id : null,
                     DistrictId = district != null ? district.Id : null,
-                    StateId = state != null ? state.Id : null
+                    StateId = state != null ? state.Id : null,
+                    CountryId = country != null ? country.Id : null,
                 }
             ).ToListAsync();
 
@@ -129,26 +142,56 @@ namespace Application.Repositories
                     };
                 }
 
+                int? blockId = null;
                 int? districtId = null;
                 int? stateId = null;
+                int? countryId = null;
+
+
 
                 if (program.LocationId.HasValue)
                 {
                     var city = await _db.Locations
-                        .FirstOrDefaultAsync(x => x.Id == program.LocationId);
+        .FirstOrDefaultAsync(x => x.Id == program.LocationId);
 
                     if (city != null)
                     {
-                        districtId = city.ParentId;
+                        // Block
+                        blockId = city.ParentId;
 
-                        if (city.ParentId.HasValue)
+                        if (blockId.HasValue)
                         {
-                            var district = await _db.Locations
-                                .FirstOrDefaultAsync(x => x.Id == city.ParentId);
+                            var block = await _db.Locations
+                                .FirstOrDefaultAsync(x => x.Id == blockId);
 
-                            if (district != null)
+                            if (block != null)
                             {
-                                stateId = district.ParentId;
+                                // District
+                                districtId = block.ParentId;
+
+                                if (districtId.HasValue)
+                                {
+                                    var district = await _db.Locations
+                                        .FirstOrDefaultAsync(x => x.Id == districtId);
+
+                                    if (district != null)
+                                    {
+                                        // State
+                                        stateId = district.ParentId;
+
+                                        if (stateId.HasValue)
+                                        {
+                                            var state = await _db.Locations
+                                                .FirstOrDefaultAsync(x => x.Id == stateId);
+
+                                            if (state != null)
+                                            {
+                                                // Country
+                                                countryId = state.ParentId;
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -165,8 +208,10 @@ namespace Application.Repositories
                     IsActive = program.IsActive,
                     IsDelete = program.IsDelete,
 
+                    BlockId = blockId,
                     DistrictId = districtId,
-                    StateId = stateId
+                    StateId = stateId,
+                    CountryId = countryId
                 };
 
                 return new
