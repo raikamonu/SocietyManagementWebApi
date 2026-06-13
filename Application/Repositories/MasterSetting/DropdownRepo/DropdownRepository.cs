@@ -59,7 +59,7 @@ namespace Application.Repositories
         public async Task<List<DropdownDTO>> GetLocation()
         {
             var data = await (from l in _db.Locations
-                              where l.IsActive == 1
+                              where l.IsActive == 1 && l.IsDelete ==0
                               select new DropdownDTO()
                               {
                                   Id = l.Id,
@@ -91,7 +91,7 @@ namespace Application.Repositories
         public async Task<List<DropdownDTO>> GetCommonLocation(int typeId, int parentId)
         {
             return await _db.Locations
-                .Where(x => x.ParentId == parentId && x.TypeId == typeId && x.IsActive == 1)
+                .Where(x => x.ParentId == parentId && x.TypeId == typeId && x.IsActive == 1 && x.IsDelete == 0)
                 .Select(x => new DropdownDTO
                 {
                     Id = x.Id,
