@@ -74,24 +74,29 @@ namespace Application.Repositories
             var data = await (
                 from p in _db.Programs
 
+                    // city
                 join city in _db.Locations
                     on p.LocationId equals city.Id into cityJoin
                 from city in cityJoin.DefaultIfEmpty()
 
+                    // block parent of city
                 join block in _db.Locations
                     on city.ParentId equals block.Id into blockJoin
-                    from block in blockJoin.DefaultIfEmpty()
+                from block in blockJoin.DefaultIfEmpty()
 
+                    // district parent of block
                 join district in _db.Locations
-                    on city.ParentId equals district.Id into districtJoin
+                    on block.ParentId equals district.Id into districtJoin
                 from district in districtJoin.DefaultIfEmpty()
 
+                    // state parent of district
                 join state in _db.Locations
                     on district.ParentId equals state.Id into stateJoin
                 from state in stateJoin.DefaultIfEmpty()
 
+                    // country parent of state
                 join country in _db.Locations
-                    on city.ParentId equals country.Id into countryJoin
+                    on state.ParentId equals country.Id into countryJoin
                 from country in countryJoin.DefaultIfEmpty()
 
                 where p.IsDelete == 0
@@ -113,11 +118,10 @@ namespace Application.Repositories
                     StateName = state != null ? state.Name : null,
                     CountryName = country != null ? country.Name : null,
 
-
                     BlockId = block != null ? block.Id : null,
                     DistrictId = district != null ? district.Id : null,
                     StateId = state != null ? state.Id : null,
-                    CountryId = country != null ? country.Id : null,
+                    CountryId = country != null ? country.Id : null
                 }
             ).ToListAsync();
 
