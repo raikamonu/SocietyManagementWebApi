@@ -26,7 +26,7 @@ namespace Application.Repositories
             try
             {
                 if (input.StartDate.HasValue && input.EndDate.HasValue &&
-                    input.EndDate < input.StartDate)
+                    input.EndDate <= input.StartDate)
                 {
                     return new
                     {
@@ -41,8 +41,8 @@ namespace Application.Repositories
                     LocationId = input.LocationId,
                     SessionId = input.SessionId,
 
-                    StartDate = input.StartDate ?? DateTime.Now,
-                    EndDate = input.EndDate ?? DateTime.Now,
+                    StartDate = input.StartDate ?? null,
+                    EndDate = input.EndDate ?? null,
 
                     IsActive = input.IsActive ?? 1,
                     IsDelete = 0,
@@ -51,6 +51,7 @@ namespace Application.Repositories
 
                 await _db.Programs.AddAsync(program);
                 await _db.SaveChangesAsync();
+
 
                 return new
                 {
@@ -252,21 +253,21 @@ namespace Application.Repositories
                 }
 
                 if (input.StartDate.HasValue && input.EndDate.HasValue &&
-                    input.EndDate < input.StartDate)
+                    input.EndDate <= input.StartDate)
                 {
                     return new
                     {
                         Success = false,
-                        Message = "End Date cannot be earlier than Start Date"
+                        Message = "End Date cannot be earlier than or equal to Start Date"
                     };
                 }
 
                 program.Name = input.Name;
                 program.LocationId = input.LocationId;
                 program.SessionId = input.SessionId;
-                program.StartDate = input.StartDate ?? program.StartDate;
-                program.EndDate = input.EndDate ?? program.EndDate;
-                program.IsActive = input.IsActive ?? program.IsActive;
+                program.StartDate = input.StartDate;
+                program.EndDate = input.EndDate;
+                program.IsActive = (int)input.IsActive;
 
 
                 await _db.SaveChangesAsync();
